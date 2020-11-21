@@ -12,7 +12,6 @@ import React, { ReactNode } from "react"
 import { connect } from "react-redux";
 import {Modal, Form, Input, Select, InputNumber} from "antd"
 import { FormInstance } from "antd/lib/form";
-import { type } from "os";
 
 const {TextArea} = Input;
 const {Option} = Select;
@@ -48,8 +47,14 @@ class AddPage extends React.Component<Props> {
 
   formRef = React.createRef<FormInstance>()
 
-  componentDidMount(){
-    console.log(this.formRef, "ass")
+  state = {
+    modalVisible: false
+  }
+  static getDerivedStateFromProps(nextProps:any, prevState:any){
+    if(nextProps.visible){
+      prevState.modalVisible = true
+    }
+    return null;
   }
 
   getElement(item:ItemProps){
@@ -91,10 +96,11 @@ class AddPage extends React.Component<Props> {
 
   render() {
     const {visible, width, onOk, onCancel, title, data, spinning, initialValues} = this.props
-
+    const {modalVisible} = this.state
 
 
     return (
+      !visible && !modalVisible?null:
       <Modal
         //强渲染
         forceRender={true}
@@ -105,11 +111,16 @@ class AddPage extends React.Component<Props> {
         onOk={()=>this.formRef.current?.submit()}
         onCancel={onCancel}
         confirmLoading={spinning}
+        afterClose={()=>{
+          this.setState({modalVisible: false})
+        }}
       >
         <Form 
           {...layout}
           ref={this.formRef} 
-          onFinish={this.onFinish.bind(this)}>
+          onFinish={this.onFinish.bind(this)}
+          initialValues={initialValues}
+          >
           {data.map((item, index)=>(
             <Form.Item 
               key={index} 

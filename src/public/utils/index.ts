@@ -96,7 +96,7 @@ export const fetch = (options: AxiosRequest)=>{
     
     createInstance()?.then( response=>{
       const {data, msg, code } = response.data;
-      console.log(response.data)
+      
       if(code==1){
         resolve( data );
       }else if(code==0){

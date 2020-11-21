@@ -37,8 +37,6 @@ const Search:React.FC<Props> = ({
 })=>{
   const [form] = Form.useForm();
 
-  
-
   const onFinish = (values:any) => {
     handleSearch(values)
   };

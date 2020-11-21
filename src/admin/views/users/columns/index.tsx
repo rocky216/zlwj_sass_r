@@ -1,4 +1,5 @@
 import { ColumnsType } from 'antd/es/table';
+import {Status} from "@public/common/mapper"
 
 interface ColumsProps {
   title:string;
@@ -9,26 +10,26 @@ interface ColumsProps {
 export const usersColumns:ColumnsType<ColumsProps> = [
   {
     title: "姓名",
-    dataIndex: "key1"
+    dataIndex: "sysUserInfo",
+    render(item) {
+      return item.realName;
+    }
   },
   {
     title: "手机号",
-    dataIndex: "key1"
+    dataIndex: "phoneAccount"
   },
   {
     title: "邮箱",
-    dataIndex: "key1"
+    dataIndex: "emailAccount"
   },
   {
-    title: "任务名称",
-    dataIndex: "key1"
-  },
-  {
-    title: "任务名称",
-    dataIndex: "key1"
+    title: "积分",
+    dataIndex: "sysUserIntegral"
   },
   {
     title: "状态",
-    dataIndex: "key1"
+    dataIndex: "status",
+    render: (item:number)=> Status[item]
   },
 ]

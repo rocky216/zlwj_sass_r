@@ -74,6 +74,95 @@ const optionList = async (opt: OptionListProps)=>{
 
 
 
+export const editCompanyProject = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-item/updateById",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const addCompanyProject = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-item/save",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const getCompanyProject = (opt:any)=>{
+  return async (dispatch:Function, getState:any)=>{
+
+    const {params, obj, next, type, refresh=false} = opt
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-item/page",
+      method: "get",
+      data: params
+    }
+    optionList({
+      options,
+      dispatch,
+      keyName: "companyproject", obj, next, refresh, type})
+  }
+}
+
+
+export const editCompanyBase = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company/updateById",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
 export const getCompanyDetail = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{
     dispatch({
@@ -89,7 +178,6 @@ export const getCompanyDetail = (params:any, next:Function)=>{
       if(next)next(data)
       dispatch({
         type: COMPANY_LOADING_END,
-        companyDetail: data
       })
       
     }catch(e){

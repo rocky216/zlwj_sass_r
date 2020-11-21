@@ -1,8 +1,8 @@
 import React from "react"
 import {connect} from "react-redux"
-import {Switch, Route, Redirect} from "react-router-dom"
+import {Switch, Route, Redirect, Link} from "react-router-dom"
 import {IProps} from "@public/common/interface"
-import {Tabs, Card} from "antd"
+import {Tabs, Card, Button} from "antd"
 import JCard from "@admin/components/JCard";
 import CompanyBaseInfo from "./baseinfo"
 import CompanyProject from "./companyproject"
@@ -24,21 +24,23 @@ class CompanyDetailPage extends React.Component<IProps> {
     return (
       <JCard spinning={spinning}>
         <div key="a">
-          <Card size="small">
-            <Tabs type="card" onChange={(val)=>{
+          <Tabs type="card" onChange={(val)=>{
               history.push(`/company/${match.params.id}/detail/${val}`)
-            }}>
-              {this.state.tabs.map(item=>(
-                <TabPane tab={item.title} key={item.key} />
-              ))}
-            </Tabs>
-            <Switch>
-              <Route  path={"/company/:id/detail/base"} component={CompanyBaseInfo} />
-              <Route  path={"/company/:id/detail/project"} component={CompanyProject} />
-              <Route  path={"/company/:id/detail/message"} component={CompanyMessage} />
-              <Redirect from="/company/:id/detail" to="/company/:id/detail/base" />
-            </Switch>
-          </Card>
+            }}
+            tabBarExtraContent={<Link to="/company"><Button>返回</Button></Link>}
+          >
+            {this.state.tabs.map(item=>(
+              <TabPane tab={item.title} key={item.key} />
+            ))}
+          </Tabs>
+        </div>
+        <div key="b">
+          <Switch>
+            <Route  path={"/company/:id/detail/base"} component={CompanyBaseInfo} />
+            <Route  path={"/company/:id/detail/project"} component={CompanyProject} />
+            <Route  path={"/company/:id/detail/message"} component={CompanyMessage} />
+            <Redirect from="/company/:id/detail" to="/company/:id/detail/base" />
+          </Switch>
         </div>
       </JCard>
     );
