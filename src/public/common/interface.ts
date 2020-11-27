@@ -4,7 +4,8 @@ export interface UtilsProps {
   addIndex: (arg1:any[],arg2?:boolean)=>any[];
   Pagination: (arg1:any,arg2:(...arg0:any)=>void )=>any;
   getToken: ()=>any;
-  submitFiles: (arg1:any[])=>string
+  submitFiles: (arg1:any[])=>string;
+  echoFiles: (arg1:any)=> any[];
 }
 
 export interface IProps {

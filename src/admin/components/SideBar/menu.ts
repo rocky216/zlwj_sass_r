@@ -10,6 +10,11 @@ export default [
     path: "/users"
   },
   {
+    name: "系统管理",
+    key: "7",
+    path: "/system"
+  },
+  {
     name: "公司项目管理",
     key: "3",
     path: "/company"
@@ -17,17 +22,16 @@ export default [
   {
     name: "系统资源管理",
     key: "4",
-    path: "/company"
+    path: "/resource"
   },
   {
     name: "定时任务",
     key: "5",
-    path: "/company",
     children: [
       {
         name: "任务配置",
         key: "5-01",
-        path: "/company"
+        path: "/timetask/conf"
       },
       {
         name: "执行日志",
@@ -44,22 +48,22 @@ export default [
       {
         name: "短信包订单",
         key: "6-01",
-        path: "/company"
+        path: "/message/order"
       },
       {
         name: "短信包配置",
         key: "6-02",
-        path: "/company"
+        path: "/message/conf"
       },
       {
         name: "短信包签名",
         key: "6-03",
-        path: "/company"
+        path: "/message/sign"
       },
       {
-        name: "短信末班",
+        name: "短信模板",
         key: "6-04",
-        path: "/company"
+        path: "/message/template"
       },
     ]
   },

@@ -84,7 +84,14 @@ const UploadElement:React.FC<Props> = ({
     if (Array.isArray(e)) {
       return e;
     }
-    if( onChange){
+    if(e.file.status == "done"){
+      const {code, msg} = e.file.response
+      if(code!=1){
+        utils.OpenNotification("error", msg)
+        return;
+      }
+    }
+    if( onChange && e.file.status == "done"){
       if(!more && e.fileList && e.fileList.length>1){
         e.fileList = [e.fileList[e.fileList.length-1]]
       }
@@ -99,6 +106,14 @@ const UploadElement:React.FC<Props> = ({
     onChange(v)
   }
 
+  const beforeUpload = (file:any)=>{
+    if(file && file.size>(1024*1024*10)){ 
+      utils.OpenNotification("error", "附件不能大于10M")
+      return false;
+    }
+    return file;
+  }
+
   const UploadWrap = (
     <Upload
       action="/zlwj/api/resource/file/uploadFile"
@@ -108,6 +123,7 @@ const UploadElement:React.FC<Props> = ({
       onChange={handleChange}
       showUploadList={true}
       onRemove={handleRemove}
+      beforeUpload={beforeUpload}
       data={{
         token: utils.getToken(),
         ...data,

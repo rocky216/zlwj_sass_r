@@ -8,7 +8,7 @@ const app = express();
 
 
 
-app.use(express.static( path.resolve(__dirname, "../build") ));
+app.use(express.static( path.resolve(__dirname, "build") ));
 
 app.set('view engine','ejs');
 app.engine("html", ejs.__express);
@@ -19,13 +19,17 @@ app.use("/zlwj/api",proxyMiddleWare({
   pathRewrite: {'^/zlwj/api' : '/zlwj/api'},
 }));
 
-app.set('views', path.resolve(__dirname, "../build"));
-app.get(`/${project}`, (req, res)=>{
-  res.render(`${project}.html`)
+app.set('views', path.resolve(__dirname, "build"));
+app.get(`/`, (req, res)=>{
+  res.render("sass.html")
+})
+app.get(`/admin`, (req, res)=>{
+  res.render("admin.html")
 })
 
 
-app.listen(3000, ()=>{
+
+app.listen(3001, ()=>{
   
   
 })

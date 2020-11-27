@@ -18,12 +18,20 @@ const {Option} = Select
 const { TextArea } = Input;
 
 
-let params = {
+let params:any = {
   current: 1,
   name: "",
   companyAddress: [],
   status: ""
 }
+
+let restParams:any = {
+  current: 1,
+  name: "",
+  companyAddress: [],
+  status: ""
+}
+
 interface Props extends IProps {
   companys: any
 }
@@ -46,7 +54,12 @@ class CompanyPage extends React.Component<Props, State> {
 
   handleSearch(values:any){
     params = Object.assign(params, values)
-    
+    if(!values){
+      console.log(restParams)
+      this.props.actions.getCompanys({params:restParams, refresh:true})
+      params= restParams
+      return
+    }
     this.props.actions.getCompanys({params, refresh:true})
   }
 
@@ -131,6 +144,7 @@ class CompanyPage extends React.Component<Props, State> {
           <Seach
             before={<Button type="primary" onClick={()=>this.setState({addVisible: true})}>新增</Button>}
             initialValues={params}
+            resetValues={restParams}
             data={[
               {label: "公司名称", name: "name", type: Input},
               {label: "省/市/区", name: "companyAddress", type: <RegionElement />,},

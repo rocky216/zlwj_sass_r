@@ -30,11 +30,13 @@ const SelectCompamy:React.FC<Props> = ({actions, companys, onChange, value})=>{
 
   return (
     <Select
+      style={{minWidth: 100}}
       showSearch
       filterOption={(input, option:any) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
       value={value}
       onChange={hanleChange}
     >
+      <Option value="">全部公司</Option>
       {companys?companys.list.map((item:any)=>(
         <Option key={item.id} value={item.id}>{item.name}</Option>
       )):null}

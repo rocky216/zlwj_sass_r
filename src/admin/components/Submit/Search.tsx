@@ -6,11 +6,12 @@
  */
 
 import React, { ReactElement, ReactNode, useEffect, useState } from "react"
-import {Button, Form, Input, Select, Card, Row, Col} from "antd"
+import {Button, Form, Input, Select, Card, Row, Col, DatePicker} from "antd"
 import {SearchOutlined, RetweetOutlined } from "@ant-design/icons"
 import _ from "lodash"
 
 const {Option} = Select
+const {RangePicker} = DatePicker
 
 interface ItemType {
   label?: string,
@@ -18,6 +19,7 @@ interface ItemType {
   type: ReactNode,
   selectList?: any[];
   initialValue?:any;
+  
 }
 
 interface Props {
@@ -25,6 +27,7 @@ interface Props {
   data: ItemType[];
   handleSearch: Function;
   initialValues: any;
+  resetValues:any;
 }
 
 
@@ -33,7 +36,7 @@ const Search:React.FC<Props> = ({
   data,
   handleSearch,
   initialValues,
-  
+  resetValues
 })=>{
   const [form] = Form.useForm();
 
@@ -42,7 +45,7 @@ const Search:React.FC<Props> = ({
   };
 
   const handleReset = function(){
-    form.resetFields()
+    form.setFieldsValue(resetValues)
     handleSearch()
   }
 
@@ -59,7 +62,12 @@ const Search:React.FC<Props> = ({
           ))}
         </Select>
       )
-    }else{
+    }else if(item.type == DatePicker){
+      return <DatePicker style={{width: "100%"}} />
+    }else if(item.type == RangePicker){
+      return <RangePicker style={{width: "100%"}} />
+    }
+    else{
       return item.type
     }
   }
@@ -95,7 +103,7 @@ const Search:React.FC<Props> = ({
               <Col  >
                 <Form.Item >
                   <Button type="primary" ghost htmlType="submit" icon={<SearchOutlined />}>搜索</Button>
-                  {/* <Button className="mgl10" onClick={handleReset} icon={<RetweetOutlined />}>重置</Button> */}
+                  <Button className="mgl10" onClick={handleReset} icon={<RetweetOutlined />}>重置</Button>
                 </Form.Item>
               </Col>
             </Row>

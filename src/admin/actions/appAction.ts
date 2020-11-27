@@ -3,6 +3,7 @@ import {fetch} from "@public/utils"
 import MC from "memory-cache"
 
 
+
 export const getCompanys = (params:any, next?:Function)=>{
   return async (dispatch:Function, getState:any)=>{
     try{
@@ -38,6 +39,35 @@ export const getCompanys = (params:any, next?:Function)=>{
   }
 }
 
+export const getCompanyHe = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company/companyItemList",
+        method: "get",
+        data: params
+      }
+      let key = options.url+JSON.stringify(options.data)
+      let isCache = MC.get(key)
+      
+      if(!isCache){ 
+        dispatch({
+          type: APP_LOADING_START
+        })
+        let data:any = await fetch(options)
+        MC.put(key, data)
+        dispatch({
+          type: APP_LOADING_END,
+          companyhe: data
+        })
+      }
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: APP_LOADING_END})
+    }
+  }
+}
 
 export const getRegions = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{

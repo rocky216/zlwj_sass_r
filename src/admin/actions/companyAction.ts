@@ -3,6 +3,7 @@ import {fetch} from "@public/utils"
 import MC from "memory-cache"
 import _ from "lodash"
 
+
 /**
  * list API公共方法
  * 
@@ -73,6 +74,46 @@ const optionList = async (opt: OptionListProps)=>{
 }
 
 
+export const getCompanyRole = (opt:any)=>{
+  return async (dispatch:Function, getState:any)=>{
+
+    const {params, obj, next, type, refresh=false} = opt
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-company/selectSystem",
+      method: "get",
+      data: params
+    }
+    optionList({
+      options,
+      dispatch,
+      keyName: "companyrole", obj, next, refresh, type})
+  }
+}
+
+
+export const addCompanyAuthPackage = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company-package/add",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
 
 export const editCompanyProject = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{

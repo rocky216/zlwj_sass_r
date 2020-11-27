@@ -14,6 +14,10 @@ interface IProps {
 
 class Login extends React.Component<IProps> {
 
+  state = {
+    spinning: false
+  }
+
   componentDidMount(){
     this.getsoket();
   }
@@ -49,6 +53,7 @@ class Login extends React.Component<IProps> {
   }
 
   onFinish = async (values:any)=>{
+    this.setState({spinning: true})
     try{
       let data:any = await fetch({
         url:"/zlwj/api/system/user/login",
@@ -56,10 +61,11 @@ class Login extends React.Component<IProps> {
         data: values
       })
       saveToken(data.token)
+      await this.setState({spinning: false})
       this.props.history.push("/")
-      
     }catch(e){
       console.log(e)
+      this.setState({spinning: false})
     }
 
   }
@@ -92,7 +98,7 @@ class Login extends React.Component<IProps> {
                     <Input.Password prefix={<LockOutlined />}  size="large" placeholder="密码" />
                   </Form.Item>
                   <Form.Item>
-                    <Button size="large" block type="primary" htmlType="submit" >登录</Button>
+                    <Button loading={this.state.spinning} size="large" block type="primary" htmlType="submit" >登录</Button>
                   </Form.Item>
                 </Form>
               </TabPane>

@@ -7,6 +7,7 @@ import JCard from "@admin/components/JCard";
 import CompanyBaseInfo from "./baseinfo"
 import CompanyProject from "./companyproject"
 import CompanyMessage from "./companymessage"
+import CompanyRole from "./companyrole"
 
 const {TabPane} = Tabs;
 
@@ -16,6 +17,7 @@ class CompanyDetailPage extends React.Component<IProps> {
       {title: "基础信息", key: "base"},
       {title: "项目列表", key: "project"},
       {title: "短信", key: "message"},
+      {title: "角色管理", key: "role"},
     ]
   }
   render() {
@@ -39,6 +41,7 @@ class CompanyDetailPage extends React.Component<IProps> {
             <Route  path={"/company/:id/detail/base"} component={CompanyBaseInfo} />
             <Route  path={"/company/:id/detail/project"} component={CompanyProject} />
             <Route  path={"/company/:id/detail/message"} component={CompanyMessage} />
+            <Route  path={"/company/:id/detail/role"} component={CompanyRole} />
             <Redirect from="/company/:id/detail" to="/company/:id/detail/base" />
           </Switch>
         </div>

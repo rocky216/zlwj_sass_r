@@ -4,6 +4,26 @@ import qs from "qs"
 import {save, remove, load} from "react-cookies"
 import _ from "lodash"
 
+
+export const echoFiles = (obj: string | any[])=>{
+  var newArr:any[] = []
+  
+  if(obj=="" || obj == null || obj == undefined){
+    return newArr
+  }
+  if(typeof obj === "string"){
+    var arr = obj.split(",");
+    _.each(arr, (item, index)=>{
+      newArr.push({
+        url: item,
+        uid: index+1,
+        name: index+1,
+      })
+    })
+  }
+  return newArr;
+}
+
 /* 处理图片上传服务器参数 */
 export function submitFiles(arr:any[]){
   if(!_.isArray(arr)) return "";

@@ -33,7 +33,32 @@ const routes = [
     name: "用户管理",
     path: "/users",
     exact: true,
-    component: lazy({loader: import("@admin/views/users")})
+    component: lazy({loader: import("@admin/views/users")}),
+    children: [
+      {
+        id: "2-01",
+        name: "用户详情",
+        path: "/users/:id/detail/:temId",
+        exact: false,
+        component: lazy({loader: import("@admin/views/users/detail")}),
+      }
+    ]
+  },
+  {
+    id: "7",
+    name: "系统管理",
+    path: "/system",
+    exact: true,
+    component: lazy({loader: import("@admin/views/system")}),
+    children: [
+      {
+        id: "7-01",
+        name: "公司详情",
+        path: "/company/:id/permisser",
+        exact: true,
+        component: lazy({loader: import("@admin/views/system/permisser")}),
+      }
+    ]
   },
   {
     id: "3",
@@ -59,15 +84,45 @@ const routes = [
     component: lazy({loader: import("@admin/views/resource")})
   },
   {
-    id: "4",
+    id: "5",
     name: "定时任务",
-    path: "/timetask",
     exact: true,
     children: [
       {
         name: "任务配置",
         path: "/timetask/conf",
         component: lazy({loader: import("@admin/views/timetask/conf")}),
+      },
+    ]
+  },
+  {
+    id: "6",
+    name: "短信管理",
+    exact: true,
+    children: [
+      {
+        id: "6-01",
+        name: "短信订单",
+        path: "/message/order",
+        component: lazy({loader: import("@admin/views/message/order")}),
+      },
+      {
+        id: "6-02",
+        name: "短信配置",
+        path: "/message/conf",
+        component: lazy({loader: import("@admin/views/message/conf")}),
+      },
+      {
+        id: "6-03",
+        name: "短信签名",
+        path: "/message/sign",
+        component: lazy({loader: import("@admin/views/message/sign")}),
+      },
+      {
+        id: "6-04",
+        name: "短信模板",
+        path: "/message/template",
+        component: lazy({loader: import("@admin/views/message/template")}),
       },
     ]
   },

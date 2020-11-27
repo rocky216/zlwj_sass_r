@@ -1,14 +1,17 @@
 import React from "react"
 import {connect} from "react-redux"
 import { bindActionCreators } from "redux";
-import {getCompanyDetail, editCompanyBase} from "@admin/actions/companyAction"
+import {getCompanyDetail, editCompanyBase, addCompanyAuthPackage} from "@admin/actions/companyAction"
 import { IProps } from "@public/common/interface";
-import { Button, Card, Col, Form, Input, Row, Skeleton } from "antd"
+import { Button, Card, Col, DatePicker, Form, Input, Row, Select, Skeleton } from "antd"
 import SelectCompany from "@admin/components/Element/SelectCompany"
 import UploadElement from "@admin/components/Element/UploadElement";
 import _ from "lodash"
 import Region from "@admin/components/Element/Region"
 import { FormInstance } from "antd/lib/form";
+import MenuTree from "@admin/components/Page/MenuTree";
+import AddPage from "@admin/components/Page/AddPage";
+import SystemElement from "@admin/components/Element/SystemElement";
 
 const {TextArea} = Input
 const layout = {
@@ -25,6 +28,7 @@ interface Props extends IProps {
 
 class CompanyBaseInfo extends React.Component<Props> {
 
+
   formRef = React.createRef<FormInstance>()
 
   state = {
@@ -40,7 +44,8 @@ class CompanyBaseInfo extends React.Component<Props> {
     ],
     companyDetail: {
       logo: ""
-    }
+    },
+    addVisible: false
   }
 
   componentDidMount(){
@@ -64,10 +69,10 @@ class CompanyBaseInfo extends React.Component<Props> {
   }
 
   render() {
-    const {companyDetail} = this.state;
+    const {companyDetail,  addVisible} = this.state;
     
     return (
-      
+      <>
         <Row>
           <Col span={8}>
             <Card size="small" extra={<Button ghost type="primary" onClick={()=>this.formRef.current?.submit()}>保存</Button>}>
@@ -83,17 +88,48 @@ class CompanyBaseInfo extends React.Component<Props> {
               </Form>:<Skeleton active />}
             </Card>
           </Col>
-          <Col span={8}></Col>
-          <Col span={8}></Col>
+          <Col span={8}>
+            <Card size="small" title="系统权限包" 
+              extra={<Button type="primary" onClick={()=>this.setState({addVisible:true})}>新增权限包</Button>}>
+              
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card size="small">
+              <MenuTree
+                disabled
+                checkable
+                defaultExpandAll
+                systemId={"25"}
+              />
+            </Card>
+          </Col>
         </Row>
-      
+        
+        <AddPage
+          title="新增权限包"
+          spinning={false}
+          visible={addVisible}
+          onCancel={()=>this.setState({addVisible: false})}
+          onOk={()=>{}}
+          data={[
+            {label: "选择系统", name: "package", type: <SystemElement  />},
+            {label: "选择权限包", name: "packageId", type: <SystemElement  />},
+            {label: "有效期", name: "isLong", type: Select, selectList: [
+              {name: "永久有效", id: "Y"},
+              {name: "有效时间", id: "N"},
+            ]},
+            {label: "有效期至", name: "expireTime", type: DatePicker},
+          ]}
+        />
+      </>
     );
   }
 }
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getCompanyDetail, editCompanyBase}, dispatch)
+    actions: bindActionCreators({getCompanyDetail, editCompanyBase, addCompanyAuthPackage}, dispatch)
   }
 }
 

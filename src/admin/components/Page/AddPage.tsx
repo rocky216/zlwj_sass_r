@@ -10,11 +10,12 @@
 
 import React, { ReactNode } from "react"
 import { connect } from "react-redux";
-import {Modal, Form, Input, Select, InputNumber} from "antd"
+import {Modal, Form, Input, Select, InputNumber, DatePicker} from "antd"
 import { FormInstance } from "antd/lib/form";
 
 const {TextArea} = Input;
 const {Option} = Select;
+const {RangePicker} = DatePicker
 
 const layout = {
   labelCol: { span: 4 },
@@ -76,6 +77,10 @@ class AddPage extends React.Component<Props> {
           ))}
         </Select>
       )
+    }else if(item.type == DatePicker){
+      return <DatePicker style={{width: "100%"}} />
+    }else if(item.type == RangePicker){
+      return <RangePicker style={{width: "100%"}} />
     }else{
       return item.type;
     }
@@ -95,9 +100,9 @@ class AddPage extends React.Component<Props> {
   }
 
   render() {
-    const {visible, width, onOk, onCancel, title, data, spinning, initialValues} = this.props
+    const {visible, width, onCancel, title, data, spinning, initialValues} = this.props
     const {modalVisible} = this.state
-
+    
 
     return (
       !visible && !modalVisible?null:
