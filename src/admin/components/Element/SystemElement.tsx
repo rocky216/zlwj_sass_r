@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Select } from "antd"
 import { connect } from "react-redux"
-import {IState} from "@public/common/interface"
 import { bindActionCreators } from "redux"
 import {getSystems} from "@admin/actions/systemAction"
 
@@ -13,9 +12,10 @@ interface Props {
   systems: any;
   onChange?:(arg1:any)=>void;
   value?: any;
+  noAll?:boolean;
 }
 
-const SystemElement:React.FC<Props> = ({actions, systems, onChange, value})=>{
+const SystemElement:React.FC<Props> = ({actions, systems, onChange, value, noAll})=>{
 
   useEffect(() => {
     actions.getSystems({pageSize: 1000})
@@ -35,7 +35,7 @@ const SystemElement:React.FC<Props> = ({actions, systems, onChange, value})=>{
       value={value}
       onChange={hanleChange}
     >
-      <Option value="">全部</Option>
+      {noAll?null:<Option value="">全部</Option>}
       {systems?systems.list.map((item:any)=>(
         <Option key={item.id} value={item.id}>{item.temName}</Option>
       )):null}

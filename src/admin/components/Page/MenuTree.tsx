@@ -12,6 +12,9 @@ interface Props {
   checkable?:boolean;
   disabled?:boolean;
   defaultExpandAll?:boolean;
+  checkedKeys?:any[];
+  onCheck?:(...arg0:any)=>void;
+  checkStrictly?:boolean;
 }
 
 const MenuTree:React.FC<Props> = ({
@@ -20,7 +23,10 @@ const MenuTree:React.FC<Props> = ({
   menutree,
   checkable,
   disabled,
-  defaultExpandAll
+  defaultExpandAll,
+  checkedKeys=[],
+  onCheck,
+  checkStrictly,
 })=>{
 
   const handleData = (arr:any[])=>{
@@ -50,6 +56,9 @@ const MenuTree:React.FC<Props> = ({
   return (
     menutree?
     <Tree
+      checkStrictly={checkStrictly}
+      onCheck={onCheck}
+      checkedKeys={checkedKeys}
       disabled={disabled}
       checkable={checkable}
       defaultExpandAll

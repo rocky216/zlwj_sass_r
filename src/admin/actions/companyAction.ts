@@ -2,6 +2,7 @@ import {COMPANY_LOADING_START, COMPANY_LOADING_END, COMPANY_LOADING_NOT} from "@
 import {fetch} from "@public/utils"
 import MC from "memory-cache"
 import _ from "lodash"
+import moment from "moment"
 
 
 /**
@@ -91,6 +92,126 @@ export const getCompanyRole = (opt:any)=>{
 }
 
 
+export const getSystemRoleMenu = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-system-role/roleMenuId",
+        method: "get",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const addOrUpdaMenu = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company-system-role-menu/addOrUpdaMenu",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const addCompanySysRole = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company-system-role/save",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const getCompanyAuthPackageMenu = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-proper-auth-package/packageMenu",
+        method: "get",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const deleteCompanyAuthPackage = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company-package/del",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
 export const addCompanyAuthPackage = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{
     dispatch({
@@ -100,7 +221,7 @@ export const addCompanyAuthPackage = (params:any, next:Function)=>{
       const options:any = {
         url: "/zlwj/api/system/sys/sys-company-package/add",
         method: "post",
-        data: params
+        data: {...params, expireTime: params.expireTime?moment(params.expireTime).format("YYYY-MM-YY"):""}
       }
       let data:any = await fetch(options)
       if(next)next(data)

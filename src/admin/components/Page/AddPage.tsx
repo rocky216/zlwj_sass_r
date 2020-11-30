@@ -51,10 +51,16 @@ class AddPage extends React.Component<Props> {
   state = {
     modalVisible: false
   }
+
+  componentDidMount(){
+    
+  }
+
   static getDerivedStateFromProps(nextProps:any, prevState:any){
     if(nextProps.visible){
       prevState.modalVisible = true
     }
+    
     return null;
   }
 
@@ -103,7 +109,6 @@ class AddPage extends React.Component<Props> {
     const {visible, width, onCancel, title, data, spinning, initialValues} = this.props
     const {modalVisible} = this.state
     
-
     return (
       !visible && !modalVisible?null:
       <Modal
@@ -121,6 +126,7 @@ class AddPage extends React.Component<Props> {
         }}
       >
         <Form 
+          name="addpage"
           {...layout}
           ref={this.formRef} 
           onFinish={this.onFinish.bind(this)}

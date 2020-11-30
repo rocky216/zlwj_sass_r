@@ -3,30 +3,34 @@ import { Select } from "antd"
 import { connect } from "react-redux"
 import {IState} from "@public/common/interface"
 import { bindActionCreators } from "redux"
-import {getSystems} from "@admin/actions/systemAction"
+import {getSystemPackage} from "@admin/actions/appAction"
 
 
 const {Option} = Select
 
 interface Props {
   actions:any;
-  systems: any;
+  systemPackage: any;
   onChange?:(arg1:any)=>void;
   value?: any;
+  systemId:any;
 }
 
-const SystemElement:React.FC<Props> = ({actions, systems, onChange, value})=>{
+const PackageElement:React.FC<Props> = ({actions, systemPackage, onChange, value, systemId})=>{
 
   useEffect(() => {
-    actions.getSystems({pageSize: 1000})
-  }, [])
+    if(systemId){
+      actions.getSystemPackage({systemId, pageSize: 100})
+    }
+    
+  }, [systemId])
 
   const hanleChange = (val:any)=>{
     if(onChange){
       onChange(val);
     }
   }
-
+  
   return (
     <Select
       style={{minWidth: 100}}
@@ -35,9 +39,8 @@ const SystemElement:React.FC<Props> = ({actions, systems, onChange, value})=>{
       value={value}
       onChange={hanleChange}
     >
-      <Option value="">全部</Option>
-      {systems?systems.list.map((item:any)=>(
-        <Option key={item.id} value={item.id}>{item.temName}</Option>
+      {systemPackage?systemPackage.map((item:any)=>(
+        <Option key={item.id} value={item.id}>{item.packageName}</Option>
       )):null}
     </Select>
   )
@@ -45,14 +48,14 @@ const SystemElement:React.FC<Props> = ({actions, systems, onChange, value})=>{
 
 const mapDispatchToProps = (dispatch:any) => {
   return {
-    actions: bindActionCreators({getSystems }, dispatch)
+    actions: bindActionCreators({getSystemPackage }, dispatch)
   }
 }
 
 const mapStateToProps = (state:any) => {
   return {
-    systems: state.system.systems
+    systemPackage: state.app.systemPackage
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SystemElement)
+export default connect(mapStateToProps, mapDispatchToProps)(PackageElement)

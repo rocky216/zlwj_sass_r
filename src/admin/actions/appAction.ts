@@ -3,6 +3,42 @@ import {fetch} from "@public/utils"
 import MC from "memory-cache"
 
 
+export const getSystemPackage = (params:any, next?:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-proper-auth-package/list",
+        method: "get",
+        data: params
+      }
+      let key = options.url+JSON.stringify(options.data)
+      let isCache = MC.get(key)
+      
+      if(!isCache){
+        
+        dispatch({
+          type: APP_LOADING_START
+        })
+        let data:any = await fetch(options)
+        console.log(data)
+        MC.put(key, data) 
+        dispatch({
+          type: APP_LOADING_END,
+          systemPackage: data
+        })
+      }else{
+        dispatch({
+          type: APP_LOADING_NOT,
+          systemPackage: isCache
+        })
+      }
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: APP_LOADING_END})
+    }
+  }
+}
 
 export const getCompanys = (params:any, next?:Function)=>{
   return async (dispatch:Function, getState:any)=>{

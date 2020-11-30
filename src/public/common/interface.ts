@@ -19,4 +19,7 @@ export interface IProps {
 export interface IState {
   app: any;
   company: any;
+  system:any;
+  other:any;
+  user:any;
 }
