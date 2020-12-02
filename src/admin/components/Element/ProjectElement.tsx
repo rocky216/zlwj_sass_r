@@ -2,24 +2,27 @@ import React, { useEffect, useState } from "react"
 import { Select } from "antd"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import {getSystems} from "@admin/actions/appAction"
+import {getCompanyProject} from "@admin/actions/appAction"
 
 
 const {Option} = Select
 
 interface Props {
   actions:any;
-  systems: any;
+  companyproject: any;
   onChange?:(arg1:any)=>void;
   value?: any;
   noAll?:boolean;
-  companyId?:any;
+  companyId:any;
 }
 
-const SystemElement:React.FC<Props> = ({actions, systems, onChange, value, noAll, companyId})=>{
+const ProjectElement:React.FC<Props> = ({actions, companyproject, onChange, value, noAll, companyId})=>{
 
   useEffect(() => {
-    actions.getSystems({companyId})
+    if(companyId){
+      actions.getCompanyProject({companyId, pageSize: 1000})
+    }
+    
   }, [companyId])
 
   const hanleChange = (val:any)=>{
@@ -37,8 +40,8 @@ const SystemElement:React.FC<Props> = ({actions, systems, onChange, value, noAll
       onChange={hanleChange}
     >
       {noAll?null:<Option value="">全部</Option>}
-      {systems?systems.map((item:any)=>(
-        <Option key={item.id} value={item.id}>{item.temName}</Option>
+      {companyproject?companyproject.list.map((item:any)=>(
+        <Option key={item.id} value={item.id}>{item.name}</Option>
       )):null}
     </Select>
   )
@@ -46,14 +49,14 @@ const SystemElement:React.FC<Props> = ({actions, systems, onChange, value, noAll
 
 const mapDispatchToProps = (dispatch:any) => {
   return {
-    actions: bindActionCreators({getSystems }, dispatch)
+    actions: bindActionCreators({getCompanyProject }, dispatch)
   }
 }
 
 const mapStateToProps = (state:any) => {
   return {
-    systems: state.app.systems
+    companyproject: state.app.companyproject
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SystemElement)
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectElement)

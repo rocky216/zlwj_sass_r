@@ -6,7 +6,7 @@
  */
 
 import React, { ReactElement, ReactNode, useEffect, useState } from "react"
-import {Button, Form, Input, Select, Card, Row, Col, DatePicker} from "antd"
+import {Button, Form, Input, Select, Card, Row, Col, DatePicker, InputNumber} from "antd"
 import {SearchOutlined, RetweetOutlined } from "@ant-design/icons"
 import _ from "lodash"
 
@@ -54,7 +54,10 @@ const Search:React.FC<Props> = ({
 
     if(item.type == Input){
       return <Input/>
-    }else if(item.type == Select){
+    } if(item.type == InputNumber){
+      return <InputNumber/>
+    }
+    else if(item.type == Select){
       return (
         <Select>
           {item.selectList.map((elem:any)=>(

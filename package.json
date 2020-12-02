@@ -70,6 +70,7 @@
     "mini-css-extract-plugin": "0.11.3",
     "moment": "^2.29.1",
     "optimize-css-assets-webpack-plugin": "5.0.4",
+    "pm2": "^4.5.0",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.2.1",
     "postcss-loader": "3.0.0",
@@ -111,6 +112,9 @@
     "start:sass": "cross-env NODE_PROJECT=sass node scripts/start.js",
     "build:sass": "cross-env NODE_PROJECT=sass node scripts/build.js",
     "server:sass": "cross-env NODE_PROJECT=sass node ./server/server.js",
+    "start:power": "cross-env NODE_PROJECT=power node scripts/start.js",
+    "build:power": "cross-env NODE_PROJECT=power node scripts/build.js",
+    "server:power": "cross-env NODE_PROJECT=power node ./server/server.js",
     "server": "node ./server/server.js",
     "test": "node scripts/test.js"
   },
@@ -124,12 +128,14 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "ie 11"
     ],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      "ie 11"
     ]
   },
   "jest": {

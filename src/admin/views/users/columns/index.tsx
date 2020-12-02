@@ -100,9 +100,4 @@ export const usersColumns:ColumnsType<ColumsProps> = [
     title: "积分",
     dataIndex: "sysUserIntegral"
   },
-  {
-    title: "状态",
-    dataIndex: "status",
-    render: (item:number)=> Status[item]
-  },
 ]

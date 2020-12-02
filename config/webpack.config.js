@@ -78,6 +78,7 @@ const hasJsxRuntime = (() => {
 
 
 const project = process.env.NODE_PROJECT;
+const themes = require("./theme")
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -152,7 +153,7 @@ module.exports = function (webpackEnv) {
           options: {
             sourceMap: true,
             lessOptions: {
-              modifyVars: { '@primary-color': '#1DA57A' },
+              modifyVars: themes[project],
               javascriptEnabled: true,
             }
           }
@@ -350,7 +351,8 @@ module.exports = function (webpackEnv) {
           'react-dom$': 'react-dom/profiling',
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
-        "@admin": path.resolve(__dirname, "../src/admin"),
+        [`@${project}`]: path.resolve(__dirname, `../src/${project}`),
+        // "@power": path.resolve(__dirname, "../src/power"),
         "@public": path.resolve(__dirname, "../src/public"),
         ...(modules.webpackAliases || {}),
         

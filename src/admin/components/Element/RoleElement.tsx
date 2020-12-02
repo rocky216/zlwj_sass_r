@@ -2,25 +2,30 @@ import React, { useEffect, useState } from "react"
 import { Select } from "antd"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
-import {getSystems} from "@admin/actions/appAction"
+import {getCompanyRole} from "@admin/actions/appAction"
 
 
 const {Option} = Select
 
 interface Props {
   actions:any;
-  systems: any;
+  companyRole: any;
   onChange?:(arg1:any)=>void;
   value?: any;
   noAll?:boolean;
-  companyId?:any;
+  companyId:any;
+  systemId?:any;
 }
 
-const SystemElement:React.FC<Props> = ({actions, systems, onChange, value, noAll, companyId})=>{
+const RoleElement:React.FC<Props> = ({actions, companyRole, onChange, value, noAll, companyId, systemId})=>{
 
   useEffect(() => {
-    actions.getSystems({companyId})
-  }, [companyId])
+    console.log(systemId)
+    actions.getCompanyRole({
+      companyId,
+      systemId,
+    })
+  }, [companyId, systemId])
 
   const hanleChange = (val:any)=>{
     if(onChange){
@@ -37,8 +42,8 @@ const SystemElement:React.FC<Props> = ({actions, systems, onChange, value, noAll
       onChange={hanleChange}
     >
       {noAll?null:<Option value="">全部</Option>}
-      {systems?systems.map((item:any)=>(
-        <Option key={item.id} value={item.id}>{item.temName}</Option>
+      {companyRole?companyRole.map((item:any)=>(
+        <Option key={item.id} value={item.id}>{item.roleName}</Option>
       )):null}
     </Select>
   )
@@ -46,14 +51,14 @@ const SystemElement:React.FC<Props> = ({actions, systems, onChange, value, noAll
 
 const mapDispatchToProps = (dispatch:any) => {
   return {
-    actions: bindActionCreators({getSystems }, dispatch)
+    actions: bindActionCreators({getCompanyRole }, dispatch)
   }
 }
 
 const mapStateToProps = (state:any) => {
   return {
-    systems: state.app.systems
+    companyRole: state.app.companyRole
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SystemElement)
+export default connect(mapStateToProps, mapDispatchToProps)(RoleElement)

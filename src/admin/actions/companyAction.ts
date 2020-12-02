@@ -46,8 +46,10 @@ const optionList = async (opt: OptionListProps)=>{
       })
     }else{
       if(obj && _.size(obj)){
+        
         let index = _.findIndex(isCache.list, (o:any)=>o.id==obj.id)
         if(type=="edit"){
+          console.log(obj, 1111)
           isCache.list[index] = _.assign(isCache.list[index], obj);
         }else if(type=="add"){
           isCache.list[index] = _.assign(isCache.list[index], obj);
@@ -74,6 +76,21 @@ const optionList = async (opt: OptionListProps)=>{
   
 }
 
+export const getCompanyStaff = (opt:any)=>{
+  return async (dispatch:Function, getState:any)=>{
+
+    const {params, obj, next, type, refresh=false} = opt
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-user/page",
+      method: "get",
+      data: params
+    }
+    optionList({
+      options,
+      dispatch,
+      keyName: "companystaff", obj, next, refresh, type})
+  }
+}
 
 export const getCompanyRole = (opt:any)=>{
   return async (dispatch:Function, getState:any)=>{
@@ -91,6 +108,197 @@ export const getCompanyRole = (opt:any)=>{
   }
 }
 
+export const addCompanyUserProject = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-user-item/addItem",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const addUserCompanyRole = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-system-role/addUserRole",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const deleteUserSystem = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-user-system/delectUserSystemAuth",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const deleteUserSystemRole = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company-system-role/delRole",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const deleteUserSystemPro = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-user-item/deleteSystemCompanyAndHe",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const addUserSystemAuth = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-user-system/addUserSystemAuth",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const getUserSystemAuth = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-user-system/userSystemAuth",
+        method: "get",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
+
+export const deleteCompanyRole = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: COMPANY_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-company-system-role/delRole",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: COMPANY_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: COMPANY_LOADING_END})
+    }
+  }
+}
 
 export const getSystemRoleMenu = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{

@@ -22,7 +22,8 @@
     "baseUrl": ".",
     "paths": {
       "@public/*": ["src/public/*"],
-      "@admin/*": ["src/admin/*"]
+      "@admin/*": ["src/admin/*"],
+      "@power/*": ["src/power/*"]
     }
   },
   "include": [

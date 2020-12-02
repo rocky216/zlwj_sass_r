@@ -8,6 +8,8 @@ import CompanyBaseInfo from "./baseinfo"
 import CompanyProject from "./companyproject"
 import CompanyMessage from "./companymessage"
 import CompanyRole from "./companyrole"
+import companystaff from "./companystaff"
+import AssignAuth from "./assign"
 
 const {TabPane} = Tabs;
 
@@ -18,6 +20,7 @@ class CompanyDetailPage extends React.Component<IProps> {
       {title: "项目列表", key: "project"},
       {title: "短信", key: "message"},
       {title: "角色管理", key: "role"},
+      {title: "员工管理", key: "staff"},
     ]
   }
   render() {
@@ -42,6 +45,8 @@ class CompanyDetailPage extends React.Component<IProps> {
             <Route  path={"/company/:id/detail/project"} component={CompanyProject} />
             <Route  path={"/company/:id/detail/message"} component={CompanyMessage} />
             <Route  path={"/company/:id/detail/role"} component={CompanyRole} />
+            <Route  path={"/company/:id/detail/staff"} component={companystaff} />
+            <Route  path={"/company/:id/detail/assignauth/:temId"} component={AssignAuth} />
             <Redirect from="/company/:id/detail" to="/company/:id/detail/base" />
           </Switch>
         </div>

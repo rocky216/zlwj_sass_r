@@ -5,11 +5,11 @@ import {Button, Card, Form, Input, InputNumber, Select, Table} from "antd"
 import {usersColumns} from "./columns"
 import JCard from "@admin/components/JCard"
 import { bindActionCreators } from "redux";
-import {getUsers, addSysUser} from "@admin/actions/userAction"
+import {getUsers, addSysUser, statusSysUser} from "@admin/actions/userAction"
 import {IProps} from "@public/common/interface"
 import { FormInstance } from "antd/lib/form";
 import AddPage from "@admin/components/Page/AddPage"
-import CompanyHeElement from "@admin/components/Element/CompanyHeElement"
+import CompanyHeElement from "@admin/components/Element/CompanyHeElement" 
 
 const {Option} = Select
 
@@ -73,15 +73,16 @@ class UsersPage extends React.Component<Props> {
     const {currentKey} = this.state
     const {auth, userName, phone, userNick, status, account, temId} = values
     if(currentKey == "authList"){
-      params = Object.assign({params, 
+      params = Object.assign(params, {
         companyId: auth.length?auth[0]:"",
         heId: auth.length?auth[1]:"",
       })
+      console.log(params, "params")
       this.props.actions.getUsers({params, refresh: true})
       return
     }
     if(currentKey == "userList"){
-      params = Object.assign({params, 
+      params = Object.assign(params, { 
         userName,
         phone,
         userNick,
@@ -90,7 +91,7 @@ class UsersPage extends React.Component<Props> {
       return
     }
     if(currentKey == "accountList"){
-      params = Object.assign({params, 
+      params = Object.assign(params, {
         status,
         account,
         temId,
@@ -100,8 +101,27 @@ class UsersPage extends React.Component<Props> {
     }
   }
 
+  statusUser(item:any){
+    this.props.actions.statusSysUser({id: item.id}, (res:any)=>{
+      this.props.utils.OpenNotification("success")
+      this.props.actions.getUsers({params, obj:res, type: "edit"}) 
+    })
+  }
+
   getCol(){
-    return [...usersColumns, {
+    let _this = this;
+    return [...usersColumns,{
+      title: "状态",
+      dataIndex: "status",
+      render(item:any, rows:any) {
+        return (
+          <Select size="small" value={item} onChange={_this.statusUser.bind(_this, rows)}>
+            <Option value={1}>启用</Option>
+            <Option value={0}>禁用</Option>
+          </Select>
+        );
+      }
+    }, {
       title: "操作",
       width: 100,
       render(item:any) {
@@ -196,7 +216,7 @@ class UsersPage extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getUsers, addSysUser}, dispatch)
+    actions: bindActionCreators({getUsers, addSysUser, statusSysUser}, dispatch)
   }
 }
 

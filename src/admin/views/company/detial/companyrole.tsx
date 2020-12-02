@@ -1,9 +1,9 @@
 import React from "react"
 import {connect} from "react-redux"
-import {getCompanyRole, addCompanySysRole, getSystemRoleMenu, addOrUpdaMenu} from "@admin/actions/companyAction"
+import {getCompanyRole, addCompanySysRole, getSystemRoleMenu, addOrUpdaMenu, deleteCompanyRole} from "@admin/actions/companyAction"
 import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
-import { Card, Col, Row, Space, Tree, Skeleton, Input, Select, Button} from "antd";
+import { Card, Col, Row, Space, Tree, Skeleton, Input, Select, Button, Popconfirm} from "antd";
 import _ from "lodash";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import AddPage from "@admin/components/Page/AddPage";
@@ -59,12 +59,23 @@ class CompanyRole extends React.Component<Props> {
         <Space size={20}>
           {item.type=="system"?<PlusOutlined 
             onClick={()=>this.setState({addRoleVisible: true, addDetail: item})} />:null}
-          {item.type=="system"?null:<DeleteOutlined />}
+          {item.type=="system"?null:(
+            <Popconfirm title="是否删除？" onConfirm={this.deleteRole.bind(this, item)}>
+              <DeleteOutlined onClick={(e:any)=>e.stopPropagation()} />
+            </Popconfirm>
+          )}
           
         </Space>
       </div>
     )
     
+  }
+
+  deleteRole(item:any, e:any){
+    this.props.actions.deleteCompanyRole({id: item.id}, ()=>{
+      this.props.utils.OpenNotification("success")
+      this.props.actions.getCompanyRole({params: {companyId: this.props.match.params.id}, refresh:true})
+    })
   }
 
   handleSelect(item:any, {node}:any){
@@ -159,7 +170,7 @@ class CompanyRole extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getCompanyRole, addCompanySysRole, getSystemRoleMenu, addOrUpdaMenu}, dispatch)
+    actions: bindActionCreators({getCompanyRole, addCompanySysRole, getSystemRoleMenu, addOrUpdaMenu, deleteCompanyRole}, dispatch)
   }
 }
 

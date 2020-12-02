@@ -6,7 +6,7 @@ import {getSelectUserCompany, getSelectRoleMenus} from "@admin/actions/userActio
 import {IProps} from "@public/common/interface"
 import _ from "lodash";
 import "./index.less"
-import JCard from "@admin/components/JCard"
+import MenuTree from "@admin/components/Page/MenuTree";
 
 
 interface Props extends IProps {
@@ -14,12 +14,15 @@ interface Props extends IProps {
 }
 
 
-class UserAuth extends React.Component<any> {
+class UserAuth extends React.Component<Props> {
   state={
     currentCompany: {
       id: "",
       addAuthVisible: false,
-    }
+      meuns:[]
+    },
+    meuns: [],
+    systemId: ""
   }
 
   componentDidMount(){
@@ -50,13 +53,17 @@ class UserAuth extends React.Component<any> {
   }
 
   handleSelect([key]:any){
-    console.log(arguments)
     if(!key)return;
     var arr = key.split("-")
+
+    this.setState({systemId: arr[1]})
+
     this.props.actions.getSelectRoleMenus({
       companyId: arr[0],
       systemId: arr[1],
       roleId: arr[2],
+    }, (res:any)=>{
+      this.setState({meuns: res})
     })
   }
 
@@ -77,7 +84,7 @@ class UserAuth extends React.Component<any> {
 
   render() {
     const {usercompany} = this.props
-    const {currentCompany} = this.state
+    const {currentCompany, meuns, systemId} = this.state
     
     return (
       <>
@@ -86,25 +93,21 @@ class UserAuth extends React.Component<any> {
             <Card title="公司" size="small">
               <Tree 
                 blockNode
+                
                 titleRender={this.titleRender }
                 treeData={this.handleData(usercompany)} 
                 onSelect={this.handleSelect.bind(this)}/>
             </Card>
           </Col>
           <Col span={8}>
+            
             <Card title="角色" size="small"  >
-              <List
-                size="small"
-                dataSource={usercompany?usercompany:[]}
-                renderItem={(item:any)=>(
-                  <div className={'companyrenderItem '+ (currentCompany.id==item.id?"active":"")} 
-                    onClick={()=>this.setState({currentCompany: item})}>
-                    {item.name}
-                    <Typography.Text mark>[项目权限]</Typography.Text>
-                  </div>
-                )}
-              >
-              </List>
+              <MenuTree 
+                systemId={systemId}
+                disabled
+                checkable
+                checkedKeys={meuns}
+              />
             </Card>
           </Col>
         </Row>

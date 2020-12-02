@@ -74,6 +74,30 @@ const optionList = async (opt: OptionListProps)=>{
 }
 
 
+export const statusSysUser = (params:any, next:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    dispatch({
+      type: USER_LOADING_START,
+    })
+    try{
+      const options:any = {
+        url: "/zlwj/api/system/sys/sys-user/enable",
+        method: "post",
+        data: params
+      }
+      let data:any = await fetch(options)
+      if(next)next(data)
+      dispatch({
+        type: USER_LOADING_END,
+      })
+      
+    }catch(e){
+      console.log(e)
+      dispatch({type: USER_LOADING_END})
+    }
+  }
+}
+
 export const addSysUser = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{
     dispatch({
@@ -377,7 +401,7 @@ export const getUsers = (opt:any)=>{
     const options:any = {
       url: "/zlwj/api/system/sys/sys-user/page",
       method: "get",
-      data: params
+      data: params 
     }
     optionList({
       options,

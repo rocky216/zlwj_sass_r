@@ -2,11 +2,12 @@ const path = require("path");
 const express = require("express");
 const ejs = require("ejs");
 var proxyMiddleWare = require("http-proxy-middleware").createProxyMiddleware;
+var compression = require('compression');
 
 const project = process.env.NODE_PROJECT;
 const app = express();
 
-
+app.use(compression());
 
 app.use(express.static( path.resolve(__dirname, "build") ));
 
