@@ -10,15 +10,15 @@ interface OptionsProps {
   data?:any;
 }
 
-interface OptProps {
+export interface OptProps {
   refresh?:boolean;
   next?: (...arg:any)=>void;
   type?: string; //edit | add | delete
   obj?: any;
 }
 
-export const storetApi = async (options:OptionsProps, keyName:string, dispatch:any, ACTION:string, opt:OptProps)=>{
-  const {refresh=false, next, type, obj} = opt;
+export const storetApi = async (options:OptionsProps, keyName:string, dispatch:any, ACTION:string, opt?:OptProps)=>{
+  const {refresh=false, next, type, obj} = opt || {};
   try{
     let key = options.url+JSON.stringify(options.data)
     let isCache = MC.get(key)

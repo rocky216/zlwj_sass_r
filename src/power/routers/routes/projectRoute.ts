@@ -23,7 +23,15 @@ export default [
     name: "设备配置",
     path: "/project/deviceconf",
     exact: true,
-    component: lazy({loader: import("@power/views/proman/deviceconf")})
+    component: lazy({loader: import("@power/views/proman/deviceconf")}),
+    children: [
+      {
+        name: "设备配置详情",
+        path: "/project/deviceconf/:id/detail/:iotId",
+        exact: true,
+        component: lazy({loader: import("@power/views/proman/devicedetail")}),
+      }
+    ]
   },
   {
     name: "分账对象配置",

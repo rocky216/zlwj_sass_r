@@ -11,3 +11,4 @@ export const ProjectLevel:any = {"XM": "项目级别", "GS": "公司级别"}
 export const DefaultStatus = ["否", "是"]
 
 export const MessageType:any = {"ALY": "阿里云", "FG": "飞鸽"}
+

@@ -5,11 +5,21 @@ import "./index.less"
 import { connect } from "react-redux"
 import SideBar from "@power/components/SideBar"
 import Routers from "@power/routers"
+import {getBase } from "@power/actions/appAction"
+import { bindActionCreators } from "redux"
 
 const { Header, Content, Footer, Sider } = Layout;
 
+interface Props {
+  actions:any;
+}
 
-class App extends React.Component {
+class App extends React.Component<Props> {
+
+  componentDidMount(){
+    this.props.actions.getBase({})
+  }
+
   render() {
     
     return (
@@ -30,6 +40,13 @@ class App extends React.Component {
     );
   }
 }
+
+const mapDispatchProps = (dispatch:any)=>{
+  return {
+    actions: bindActionCreators({getBase}, dispatch)
+  }
+}
+
 const mapStateToProps = (state:any) => {
   console.log(state)
   return {
@@ -37,4 +54,4 @@ const mapStateToProps = (state:any) => {
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchProps)(App)

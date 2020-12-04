@@ -13,10 +13,15 @@ interface Props {
   onOk: (...arg0:any)=>void;
   onCancel:()=>void;
   title?:any;
-  data:ItemType[];
+  data:ItemTypeProps[];
   initialValues?:any;
   spinning?:boolean;
 }
+
+const layout = {
+  labelCol: { span: 5 },
+  wrapperCol: { span: 16 },
+};
 
 const AddModular:React.FC<Props> = ({
   visible,
@@ -34,7 +39,9 @@ const AddModular:React.FC<Props> = ({
   useEffect(()=>{
     if(visible){
       setModalVisible(true)
+      form.setFieldsValue(initialValues)
     }
+
   }, [visible])
 
   const handleRules = (item:ItemTypeProps)=>{
@@ -59,7 +66,10 @@ const AddModular:React.FC<Props> = ({
         setModalVisible(false)
       }}
     >
-      <Form name="addModular" form={form} onFinish={(values)=>onOk(values)} initialValues={initialValues} >
+      <Form 
+        name="addModular" 
+        {...layout}
+        form={form} onFinish={(values)=>onOk(values)} initialValues={initialValues} >
         {data.map((item, index)=>(
           <Form.Item 
             key={index} 
@@ -76,3 +86,6 @@ const AddModular:React.FC<Props> = ({
     </Modal>
   )
 }
+
+
+export default AddModular;

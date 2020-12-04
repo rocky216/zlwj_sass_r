@@ -1,0 +1,34 @@
+{
+  "files": {
+    "power/js/0.0883f9e0.chunk.js": "/power/js/0.0883f9e0.chunk.js",
+    "power/js/0.0883f9e0.chunk.js.map": "/power/js/0.0883f9e0.chunk.js.map",
+    "power/js/1.f3ae4a26.chunk.js": "/power/js/1.f3ae4a26.chunk.js",
+    "power/js/1.f3ae4a26.chunk.js.map": "/power/js/1.f3ae4a26.chunk.js.map",
+    "main.css": "/power/css/main.3f267f30.chunk.css",
+    "main.js": "/power/js/main.250ff193.chunk.js",
+    "main.js.map": "/power/js/main.250ff193.chunk.js.map",
+    "runtime-main.js": "/power/js/runtime-main.2c4b9057.js",
+    "runtime-main.js.map": "/power/js/runtime-main.2c4b9057.js.map",
+    "power/js/4.565894ab.chunk.js": "/power/js/4.565894ab.chunk.js",
+    "power/js/4.565894ab.chunk.js.map": "/power/js/4.565894ab.chunk.js.map",
+    "power/js/5.33da6c1a.chunk.js": "/power/js/5.33da6c1a.chunk.js",
+    "power/js/5.33da6c1a.chunk.js.map": "/power/js/5.33da6c1a.chunk.js.map",
+    "power/js/6.ae0cdf43.chunk.js": "/power/js/6.ae0cdf43.chunk.js",
+    "power/js/6.ae0cdf43.chunk.js.map": "/power/js/6.ae0cdf43.chunk.js.map",
+    "power/js/7.d69de4d5.chunk.js": "/power/js/7.d69de4d5.chunk.js",
+    "power/js/7.d69de4d5.chunk.js.map": "/power/js/7.d69de4d5.chunk.js.map",
+    "power/js/8.107fa04e.chunk.js": "/power/js/8.107fa04e.chunk.js",
+    "power/js/8.107fa04e.chunk.js.map": "/power/js/8.107fa04e.chunk.js.map",
+    "power/js/9.62e68fb7.chunk.js": "/power/js/9.62e68fb7.chunk.js",
+    "power/js/9.62e68fb7.chunk.js.map": "/power/js/9.62e68fb7.chunk.js.map",
+    "power.html": "/power.html",
+    "power/css/main.3f267f30.chunk.css.map": "/power/css/main.3f267f30.chunk.css.map",
+    "power/js/4.565894ab.chunk.js.LICENSE.txt": "/power/js/4.565894ab.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "power/js/runtime-main.2c4b9057.js",
+    "power/js/4.565894ab.chunk.js",
+    "power/css/main.3f267f30.chunk.css",
+    "power/js/main.250ff193.chunk.js"
+  ]
+}

@@ -27,6 +27,9 @@ app.get(`/`, (req, res)=>{
 app.get(`/admin`, (req, res)=>{
   res.render("admin.html")
 })
+app.get(`/power`, (req, res)=>{
+  res.render("power.html")
+})
 
 
 

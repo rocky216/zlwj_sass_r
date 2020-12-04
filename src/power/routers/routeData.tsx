@@ -5,6 +5,9 @@ import projectRoute from "./routes/projectRoute"
 const getId = (arr:any[], key:string)=>{
   _.each(arr, (item, index)=>{
     item.id = key+"-"+(index<9?"0"+(index+1):index+1)
+    if(item.children && item.children.length){
+      getId(item.children, item.id)
+    }
   })
   return arr
 }
