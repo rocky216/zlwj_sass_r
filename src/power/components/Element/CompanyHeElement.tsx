@@ -7,18 +7,19 @@ import _ from "lodash"
 
 const {TreeNode} = TreeSelect
 
+type TypeProps = undefined | "treeselect"
 
 interface Props {
   companyhe: any[];
   actions: any;
   onChange?:(value:any)=>void;
   value?:string[];
-  type?:string;
+  type?:TypeProps;
 }
 
 const CompanyHeElement:React.FC<Props> = ({
   onChange,
-  value=[],
+  value,
   actions,
   companyhe,
   type
@@ -30,7 +31,7 @@ const CompanyHeElement:React.FC<Props> = ({
 
   const rCTreeNode = (arr:any[])=>{
     return arr?arr.map(item=>(
-      <TreeNode key={item.uuid} value={item.uuid} title={item.name}>
+      <TreeNode key={item.companyItemId} value={item.companyItemId} title={item.companyItemName} selectable={item.items?false:true}>
         {item.items && item.items.length? rCTreeNode(item.items):null}
       </TreeNode>
     )):null
@@ -47,7 +48,12 @@ const CompanyHeElement:React.FC<Props> = ({
           <TreeSelect
             multiple
             allowClear
-            style={{width: 200}}
+            value={value}
+            onChange={(v)=>{
+              if(onChange){
+                onChange(v)
+              }
+            }}
           >
             {rCTreeNode(companyhe)}
           </TreeSelect>

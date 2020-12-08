@@ -25,11 +25,18 @@ class App extends React.Component<Props> {
     return (
       <div className="myApp">
         <Layout>
-          <Sider>
+          <Sider
+            style={{
+              overflow: 'auto',
+              height: '100vh',
+              position: 'fixed',
+              left: 0,
+            }}
+          >
             <div className="logo"  />
             <SideBar/>
           </Sider>
-          <Layout className="content">
+          <Layout className="content" style={{ marginLeft: 200 }}>
             <Header/>
             <Content className="content_inner" >
               <Routers/>

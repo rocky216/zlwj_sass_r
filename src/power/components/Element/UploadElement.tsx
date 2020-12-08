@@ -10,7 +10,7 @@ interface DataProps {
   fileType?:any;
   fileSize?:any;
   heCode?:any;
-  resourceType:any;
+  resourceType?:any;
   linkType?:any;
   userId?:any;
   isFlag?:any;
@@ -27,13 +27,7 @@ interface Props {
 }
 
 const UploadElement:React.FC<Props> = ({
-  data={
-    resourceType: "0",
-    fileType: "photo",
-    linkType: "logo",
-    fileSize: 10240,
-    isFlag: 0
-  }, 
+  data={}, 
   utils, 
   type="image",
   onChange,
@@ -98,6 +92,14 @@ const UploadElement:React.FC<Props> = ({
       <div style={{ marginTop: 8 }}>上传图片</div>
     </div>
   );
+  const initialData = {
+    token: utils.getToken(),
+    fileType: "photo",
+    linkType: "logo",
+    fileSize: 10240,
+    isFlag: 0,
+    resourceType: "0",
+  }
 
   return (
     <Upload
@@ -110,8 +112,8 @@ const UploadElement:React.FC<Props> = ({
     onRemove={handleRemove}
     beforeUpload={beforeUpload}
     data={{
-      token: utils.getToken(),
-      ...data,
+      ...initialData,
+      ...data
     }}
     >
 

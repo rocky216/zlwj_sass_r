@@ -9,3 +9,6 @@ export const PayType:any = {"K": "充电卡", "G": "智联万家APP", "W": "微�
 
 export const OnLineType = ["离线", "在线"]
 export const OnLineTypeColor = ["#f50", "#2db7f5"]
+
+export const Status = ["禁用", "启用"]
+export const StatusColor = ["#ff4d4f", "#1890ff"]

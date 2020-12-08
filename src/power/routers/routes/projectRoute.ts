@@ -37,6 +37,14 @@ export default [
     name: "分账对象配置",
     path: "/project/separaccount",
     exact: true,
-    component: lazy({loader: import("@power/views/proman/separaccount")})
+    component: lazy({loader: import("@power/views/proman/separaccount")}),
+    children: [
+      {
+        name: "设备配置详情",
+        path: "/project/separaccount/:id/log",
+        exact: true,
+        component: lazy({loader: import("@power/views/proman/separaccountlog")}),
+      }
+    ]
   },
 ]

@@ -3,12 +3,13 @@ import {connect} from "react-redux"
 import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
 import JCard from "@public/components/JCard"
-import { Button, Card, DatePicker, Descriptions, Skeleton, Tag } from "antd";
-import {getDeviceBaseDetail, getDeviceOnlineLog } from "@power/actions/projectAction"
+import { Button, Card, DatePicker, Descriptions, Skeleton, Space, Tag, Typography } from "antd";
+import {getDeviceBaseDetail, getDeviceOnlineLog, getDateSignal, getTreeDayStatic } from "@power/actions/projectAction"
 import { Link } from "react-router-dom";
 import {OnLineType, OnLineTypeColor} from "@public/common/powerMapper"
 import { FundViewOutlined, WifiOutlined, WomanOutlined } from "@ant-design/icons";
 import moment from "moment"
+import UseChart from "@power/components/Charts/UseChart"
 
 const {RangePicker } = DatePicker
 
@@ -32,7 +33,11 @@ class DeviceDetail extends React.Component<Props> {
       {label: "iotId", name: "iotId"},
     ],
     onlineLog: "",
-    onlineTime: moment()
+    onlineTime: moment(),
+    signalTime: [moment(), moment()],
+    lineData: [],
+    threeDays: [],
+    threeDaysMap: {}
   }
 
   componentDidMount(){
@@ -41,7 +46,15 @@ class DeviceDetail extends React.Component<Props> {
       this.setState({baseinfo: res})
     })
     this.initialOnlineLog(this.state.onlineTime)
-    
+    this.initialSignal(this.state.signalTime)
+    this.props.actions.getTreeDayStatic({id}, (res:any)=>{
+      this.setState({threeDays:res.deviceOrderOffInfo, threeDaysMap: res})
+    })
+  }
+  initialSignal(rtime:any[]){
+    this.props.actions.getDateSignal({iotId: this.props.match.params.iotId, rtime}, (res:any)=>{
+      this.setState({lineData: res, })
+    })
   }
 
   initialOnlineLog(onlineTime:any){
@@ -54,10 +67,10 @@ class DeviceDetail extends React.Component<Props> {
 
   render() {
     const {spinning, utils} = this.props
-    const {baseinfo, baseList, onlineLog, onlineTime} = this.state
-    const {companyName, itemName, shedName, deviceName, online} = baseinfo
+    const {baseinfo, baseList, onlineLog, onlineTime, lineData, threeDays, signalTime, threeDaysMap} = this.state
+    const {companyName, itemName, shedName, deviceName, online, } = baseinfo
 
-
+    
     return (
       <JCard spinning={spinning}> 
         <Card size="small">
@@ -100,13 +113,48 @@ class DeviceDetail extends React.Component<Props> {
           </Descriptions>
           :<Skeleton active />}
         </Card>
-        <Card size="small"> 
-         <Descriptions title="信号强度" extra={<RangePicker format="YYYY-MM-DD HH:mm" showTime disabledDate={(currentDate)=>{
-           console.log(currentDate)
-           return false;
-         }} />}>
-
-         </Descriptions>
+        <Card className="mgt10" size="small" 
+          title={<Typography.Title level={5}>信号强度</Typography.Title>} 
+          extra={(
+            <Space>
+              <RangePicker format="YYYY-MM-DD HH:mm" value={signalTime} showTime onChange={(v:any)=>{
+            this.setState({signalTime:v})
+          }} />
+          <Button type="primary"  onClick={()=>{
+            this.initialSignal(signalTime)
+          }}>搜索</Button>
+            </Space>
+          )} > 
+          <UseChart 
+            type="line" 
+            data={lineData} 
+            xField="addTime" 
+            yField={["signal"]} 
+            yFieldName={["信号"]}/>
+        </Card>
+        <Card 
+          className="mgt10"
+          size="small" 
+          extra={(
+            <Descriptions title="30日统计图" extra="" column={6}>
+              <Descriptions.Item label="7日掉线合计">{threeDaysMap.weekOffNum}次</Descriptions.Item>
+              <Descriptions.Item label="15日掉线合计">{threeDaysMap.fifteenOffNum}次</Descriptions.Item>
+              <Descriptions.Item label="30日掉线合计">{threeDaysMap.monthOffNum}次</Descriptions.Item>
+              <Descriptions.Item label="7日订单合计">{threeDaysMap.weekNum}单</Descriptions.Item>
+              <Descriptions.Item label="15日订单合计">{threeDaysMap.fifteenNum}单</Descriptions.Item>
+              <Descriptions.Item label="30日订单合计">{threeDaysMap.monthNum}单</Descriptions.Item>
+            </Descriptions>
+          )} > 
+          <UseChart
+            type="dualAxes" 
+            data={[threeDays,threeDays]} 
+            xField="date" 
+            yField={["offNum", "orderNum"]} 
+            yFieldName={["掉线次数", "订单"]}
+            geometryOptions={[
+              {geometry: "line", color: "#ff4d4f"},
+              {geometry: "column"},
+            ]}/>
         </Card>
       </JCard>
     );
@@ -115,7 +163,7 @@ class DeviceDetail extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getDeviceBaseDetail, getDeviceOnlineLog}, dispatch)
+    actions: bindActionCreators({getDeviceBaseDetail, getDeviceOnlineLog, getDateSignal, getTreeDayStatic}, dispatch)
   }
 }
 

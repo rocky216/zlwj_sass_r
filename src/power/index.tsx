@@ -13,8 +13,8 @@ import Index from './views';
 ReactDOM.render(
     <Provider store={store}>
       <HashRouter>
-      <ConfigProvider  locale={zhCN}>
-        <Index/>
+        <ConfigProvider  locale={zhCN}>
+          <Index/>
         </ConfigProvider>
       </HashRouter>
     </Provider>

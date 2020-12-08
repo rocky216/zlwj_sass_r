@@ -2,7 +2,102 @@ import {storetApi, stateApi} from "@public/utils/action"
 const ACTION = "PROJECT"
 import {OptProps} from "@public/utils/action"
 import _ from "lodash"
+import moment from "moment"
 
+
+
+
+
+export const getSeparaccountLog = (params:any, opt?:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner-account-order-desc/page",
+      method: "get",
+      data: {
+        ...(_.omit(params,"companyHe")),
+        companyId: params.companyHe[0]||"",
+        itemId: params.companyHe[1]||"",
+      }
+    }
+    storetApi(options, "separaccountlog", dispatch, ACTION, opt)
+  }
+}
+
+export const deleteSeparaccount = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner/delPartnerId",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const editSeparaccountList = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner/updatePartner",
+      method: "post",
+      data: {...params, partnerJson: params.partnerJson.join()}
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const addSeparaccountList = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner/addPartner",
+      method: "post",
+      data: {...params, partnerJson: params.partnerJson.join()}
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+
+export const getSeparaccountList = (params:any, opt?:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner/page",
+      method: "get",
+      data: {
+        ...(_.omit(params,"companyHe")),
+        companyId: params.companyHe[0]||"",
+        itemId: params.companyHe[1]||"",
+      }
+    }
+    storetApi(options, "separaccount", dispatch, ACTION, opt)
+  }
+}
+
+export const getTreeDayStatic = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-device/selectThirtyData",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+
+export const getDateSignal = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-signal/dateSignal",
+      method: "get",
+      data: {
+          ...(_.omit(params, "rtime")), 
+          startTime: params.rtime && params.rtime[0]?moment(params.rtime[0]).format("YYYY-MM-DD hh:mm:ss"):"",
+          endTime: params.rtime && params.rtime[1]? moment(params.rtime[1]).format("YYYY-MM-DD hh:mm:ss") : "",
+      }
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
 export const getDeviceOnlineLog = (params:any, next?:(...arg:any)=>void)=>{
   return async (dispatch:Function, getState:any)=>{

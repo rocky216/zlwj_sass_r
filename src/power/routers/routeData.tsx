@@ -1,6 +1,9 @@
 import _ from "lodash"
+import lazy from "@public/utils/lazy"
 import Home from "@power/views/home"
 import projectRoute from "./routes/projectRoute"
+import activeRoute from "./routes/activeRoute"
+import cardRoute from "./routes/cardRoute"
 
 const getId = (arr:any[], key:string)=>{
   _.each(arr, (item, index)=>{
@@ -25,6 +28,19 @@ export const routes = [
     id: "2",
     name: "项目管理",
     children: getId(projectRoute,"2")
+  },
+  {
+    id: "3",
+    name: "活动管理",
+    children: getId(activeRoute,"3")
+  },
+  {
+    id: "4",
+    name: "充电卡管理",
+    path: "/card",
+    exact: true,
+    component: lazy({loader: import("@power/views/card")}),
+    children: getId(cardRoute,"4")
   },
 ]
 

@@ -12,3 +12,5 @@ export const DefaultStatus = ["否", "是"]
 
 export const MessageType:any = {"ALY": "阿里云", "FG": "飞鸽"}
 
+
+

@@ -5,6 +5,8 @@ import {ItemType, getNode} from "./getnode"
 
 interface ItemTypeProps extends ItemType {
   rules?: boolean | any[];
+  wrapperCol?:any;
+  labelCol?:any;
 }
 
 interface Props {
@@ -77,6 +79,8 @@ const AddModular:React.FC<Props> = ({
             name={item.name} 
             initialValue={item.initialValue}
             rules={handleRules(item)}
+            wrapperCol={item.wrapperCol}
+            labelCol={item.labelCol}
             >
             {getNode(item)}
           </Form.Item>

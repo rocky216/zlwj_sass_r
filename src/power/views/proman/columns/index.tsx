@@ -2,6 +2,66 @@ import React from "react"
 import { Tag } from "antd";
 import {WhetherType, PayType, FuseStatus, FuseStatusColor, OnLineType, OnLineTypeColor} from "@public/common/powerMapper"
 
+
+export const separaccountLogColumns = [
+  {
+    title: "创建信息",
+    dataIndex: "buildTime"
+  },
+  {
+    title: "分账支出单号",
+    dataIndex: "orderNo"
+  },
+  {
+    title: "分账项目",
+    dataIndex: "powerPartnerComItemList",
+    render:(item:any)=>{
+      return item.map((elem:any,index:number)=>(
+      <Tag key={index}>{elem.companyId}/{elem.itemId}</Tag>
+      ))
+    }
+  },
+  {
+    title: "分账说明",
+    dataIndex: "partnerDesc"
+  },
+  {
+    title: "分账金额",
+    dataIndex: "fzFee"
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+  {
+    title: "状态",
+    dataIndex: "status"
+  }
+]
+
+export const separaccountColumns = [
+  {
+    title: "分账对象名称",
+    dataIndex: "partnerName"
+  },
+  {
+    title: "联系电话",
+    dataIndex: "partnerPhone"
+  },
+  {
+    title: "分账说明",
+    dataIndex: "partnerDesc"
+  },
+  {
+    title: "关联项目",
+    dataIndex: "itemNum"
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  }
+]
+
 export const devicesColumns = [
   {
     title: "状态",
