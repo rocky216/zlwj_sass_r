@@ -4,6 +4,9 @@ import Home from "@power/views/home"
 import projectRoute from "./routes/projectRoute"
 import activeRoute from "./routes/activeRoute"
 import cardRoute from "./routes/cardRoute"
+import incomeRoute from "./routes/incomeRoute"
+import expendRoute from "./routes/expendRoute"
+
 
 const getId = (arr:any[], key:string)=>{
   _.each(arr, (item, index)=>{
@@ -41,6 +44,16 @@ export const routes = [
     exact: true,
     component: lazy({loader: import("@power/views/card")}),
     children: getId(cardRoute,"4")
+  },
+  {
+    id: "5",
+    name: "收入管理",
+    children: getId(incomeRoute,"5")
+  },
+  {
+    id: "6",
+    name: "支出管理",
+    children: getId(expendRoute,"6")
   },
 ]
 

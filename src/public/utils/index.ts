@@ -3,7 +3,22 @@ import {notification } from "antd"
 import qs from "qs"
 import {save, remove, load} from "react-cookies"
 import _ from "lodash"
+import moment, { Moment } from "moment"
 
+
+//处理时间范围
+export const gRtime = (arr: Moment[], sTime:string, eTime:string, format="YYYY-MM-DD")=>{
+  if(!arr || !_.isArray(arr) || arr.length<2){
+    return {
+      [sTime]: "",
+      [eTime]: "",
+    }
+  }
+  return {
+    [sTime]: moment(arr[0]).format(format),
+    [eTime]: moment(arr[1]).format(format),
+  }
+}
 
 export const echoFiles = (obj: string | any[])=>{
   var newArr:any[] = []

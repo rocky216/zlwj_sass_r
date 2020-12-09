@@ -52,14 +52,12 @@ class CardDetail extends React.Component<Props> {
   }
 
   render() {
-    const {spinning, utils, linkcard, linkcardlog} = this.props
-
+    const {spinning, utils, linkcard, linkcardlog, history} = this.props
+    
     return (
       <JCard spinning={spinning}> 
         <Tabs type="card"  tabBarExtraContent={(
-          <Link to="/card">
-            <Button>返回</Button>
-          </Link>
+          <Button onClick={()=>history.goBack()}>返回</Button>
         )}>
           <Tabs.TabPane key="1" tab="关联用户">
             <Table size="small" columns={this.getCol()} dataSource={linkcard?utils.addIndex(linkcard):[]}  

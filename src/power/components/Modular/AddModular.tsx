@@ -62,6 +62,7 @@ const AddModular:React.FC<Props> = ({
       visible={visible}
       width={width || 560}
       onCancel={onCancel}
+      destroyOnClose
       onOk={()=>form.submit()}
       confirmLoading={spinning}
       afterClose={()=>{
