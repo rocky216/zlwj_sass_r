@@ -66,7 +66,7 @@ class DeviceDetail extends React.Component<Props> {
   }
 
   render() {
-    const {spinning, utils} = this.props
+    const {spinning, utils, history} = this.props
     const {baseinfo, baseList, onlineLog, onlineTime, lineData, threeDays, signalTime, threeDaysMap} = this.state
     const {companyName, itemName, shedName, deviceName, online, } = baseinfo
 
@@ -76,7 +76,7 @@ class DeviceDetail extends React.Component<Props> {
         <Card size="small">
           {baseinfo?
           <Descriptions size="small" column={6} title={`（${companyName}${itemName}${shedName}）${deviceName}`}  
-            extra={<Link to="/project/deviceconf"><Button>返回</Button></Link>} >
+            extra={<Button onClick={()=>history.goBack()}>返回</Button>} >
             <Descriptions.Item label={<span>状态</span>}>
               <Tag color={OnLineTypeColor[online]}>{OnLineType[online]}</Tag>  
             </Descriptions.Item> 

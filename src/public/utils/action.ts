@@ -51,10 +51,14 @@ export const storetApi = async (options:OptionsProps, keyName:string, dispatch:a
           type: `${ACTION}_LOADING_END`,
           [keyName]: isCache
         })
+        if(next)next(isCache)
       }
     }
   }catch(e){
     console.log(e)
+    dispatch({
+      type: `${ACTION}_LOADING_END`,
+    })
   }
 
 }

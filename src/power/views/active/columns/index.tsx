@@ -1,12 +1,12 @@
 import React from "react"
-import {Status, StatusColor} from "@public/common/powerMapper"
+import {PayType, Status, StatusColor} from "@public/common/powerMapper"
 import { Tag, Image} from "antd"
 
 
 export const memcerColumns = [
   {
     title: "活动图",
-    dataIndex: "couponIcon",
+    dataIndex: "activityUrl",
     render: (item:any)=><Image src={item} width="100" height="100" />
   },
   {
@@ -23,11 +23,17 @@ export const memcerColumns = [
   },
   {
     title: "活动详情",
-    dataIndex: "activityFee"
+    dataIndex: "activityInfoList",
+    render:(item:any[])=>{
+      return item.map((elem,index)=>(
+        <Tag key={index}>{elem.activityInfo}</Tag>
+      ))
+    }
   },
   {
     title: "活动途径",
-    dataIndex: "activityObject"
+    dataIndex: "activityObject",
+    render:(item:any)=>PayType[item]
   },
   {
     title: "活动时间",

@@ -14,6 +14,9 @@ interface DataProps {
   linkType?:any;
   userId?:any;
   isFlag?:any;
+  companyId?:any;
+  itemId?:any;
+  temId?:any;
 }
 
 
@@ -40,8 +43,8 @@ const UploadElement:React.FC<Props> = ({
     var newArr:any[] = [];
     _.each(arr, (item,index)=>{
       if(item.response && item.response.code == 1){
-        const {dowloadHttpUrl, fileName, id} = item.response.data
-        newArr.push({url: dowloadHttpUrl, name: fileName, uid: id })
+        const {downloadUrl, fileName, id} = item.response.data
+        newArr.push({url: downloadUrl, name: fileName, uid: id })
       }else{
         newArr.push(item)
       }
@@ -52,6 +55,7 @@ const UploadElement:React.FC<Props> = ({
 
   const handleChange = (e:any)=>{
     setLoading(true)
+    console.log(e)
     if (Array.isArray(e)) {
       return e;
     }
@@ -62,7 +66,7 @@ const UploadElement:React.FC<Props> = ({
         return;
       }
     }
-    if( onChange && e.file.status == "done"){
+    if( onChange){
       if(!more && e.fileList && e.fileList.length>1){
         e.fileList = [e.fileList[e.fileList.length-1]]
       }
@@ -94,9 +98,6 @@ const UploadElement:React.FC<Props> = ({
   );
   const initialData = {
     token: utils.getToken(),
-    fileType: "photo",
-    linkType: "logo",
-    fileSize: 10240,
     isFlag: 0,
     resourceType: "0",
   }

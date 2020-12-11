@@ -6,6 +6,7 @@ import activeRoute from "./routes/activeRoute"
 import cardRoute from "./routes/cardRoute"
 import incomeRoute from "./routes/incomeRoute"
 import expendRoute from "./routes/expendRoute"
+import monitorRoute from "./routes/monitorRoute"
 
 
 const getId = (arr:any[], key:string)=>{
@@ -54,6 +55,11 @@ export const routes = [
     id: "6",
     name: "支出管理",
     children: getId(expendRoute,"6")
+  },
+  {
+    id: "7",
+    name: "监控管理",
+    children: getId(monitorRoute,"7")
   },
 ]
 

@@ -11,6 +11,7 @@ import CompanyHeElement from "@power/components/Element/CompanyHeElement";
 import StatusElement from "@power/components/Element/StatusElement";
 import AddModular from "@power/components/Modular/AddModular";
 import UploadElement from "@power/components/Element/UploadElement";
+import Memcerconf from "./memcerconf"
 
 
 interface Props extends IProps {
@@ -19,14 +20,12 @@ interface Props extends IProps {
 
 let params = {
   current: 1,
-  couponType: "",
   companyHe: [],
   status: "",
   activityName: "",
 }
 let resetParams = {
   current: 1,
-  couponType: "",
   companyHe: [],
   status: "",
   activityName: "",
@@ -45,7 +44,7 @@ class ActiveMemcer extends React.Component<Props> {
   }
 
   getCol(){
-    return [...memcerColumns, {
+    return [...memcerColumns, {  
       title: "状态",
       dataIndex: "status",
       render:(item:any, rows:any)=><StatusElement size="small" value={item} notAll onChange={(v:any)=>{
@@ -114,13 +113,14 @@ class ActiveMemcer extends React.Component<Props> {
           visible={addVisible}
           onCancel={()=>this.setState({addVisible:false})}
           onOk={(values:any)=>{
-
+            console.log(values)
           }}
           data={[
             {label: "公司项目", name: "companyHe", type: <CompanyHeElement/>},
-            {label: "活动图片", name: "couponIcon", type: <UploadElement data={{linkType: "powerMemberActive"}} />},
+            {label: "活动图片", name: "activityUrl", type: <UploadElement data={{fileType: "activity"}} />},
             {label: "活动时间", name: "rtime", type: "rangepicker"},
             {label: "会员劵配置", name: "config", type: "rangepicker"},
+            {label: "充值配置", name: "activityJson", type: <Memcerconf/>},
             {label: "活动途径", name: "activityObject", type: "select", selectList: [
               {label: "业主app", id: "G"},
               {label: "小程序用户", id: "W"},

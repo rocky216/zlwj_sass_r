@@ -5,6 +5,98 @@ import _ from "lodash"
 import {gRtime} from "@public/utils"
 
 
+export const getseparaaccountDetail = (params:any, opt?:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner-account-order/getById",
+      method: "get",
+      data: params
+    }
+    storetApi(options, "acountdetail", dispatch, ACTION, opt)
+  }
+}
+
+export const cancelSeparaAccoun = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner-account-order/delPartnerAccountOrder",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const addSeparaAccountLog = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner-account-order/addOrderDesc",
+      method: "post",
+      data: {
+        ...(_.omit(params, ["companyHe"])),
+        companyId: params.companyHe[0]||"",
+        itemId: params.companyHe[1]||"",
+        orderDescJson: JSON.stringify(params.orderDescJson.list),
+        orderFee: params.orderDescJson.orderFee
+      }
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getPartnerList = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner-com-item/partnerList",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe"])),
+        companyId: params.companyHe[0]||"",
+        itemId: params.companyHe[1]||"",
+      }
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getSeparaAccountLog = (params:any, opt?:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-partner-account-order/page",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe", "rtime"])),
+        companyId: params.companyHe[0]||"",
+        itemId: params.companyHe[1]||"",
+        ...gRtime(params.rtime, "startTime", "endTime"),
+      }
+    }
+    storetApi(options, "separac", dispatch, ACTION, opt)
+  }
+}
+
+export const cancelElectfees = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-metert-order/cancellationMeterOrder",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getElectfeesDetail = (params:any, opt?:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-meter-order-desc/selectMeterOrderDesc",
+      method: "get",
+      data: params
+    }
+    storetApi(options, "electdetail", dispatch, ACTION, opt)
+  }
+}
+
 export const addElectfees = (params:any, next?:(...arg:any)=>void)=>{
   return async (dispatch:Function, getState:any)=>{
     const options:any = {
@@ -59,7 +151,7 @@ export const getElectfees = (params:any, opt?:OptProps)=>{
 export const getcardOrder = (params:any, opt?:OptProps)=>{
   return async (dispatch:Function, getState:any)=>{
     const options:any = {
-      url: "/zlwj/api/powerDevice/sys/power-card-balance-flow/page",
+      url: "/zlwj/api/powerDevice/sys/power-card-recharge-order/page",
       method: "get",
       data: {
         ...(_.omit(params, ["rtime"])),

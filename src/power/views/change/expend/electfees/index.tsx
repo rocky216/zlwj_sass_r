@@ -3,14 +3,16 @@ import {connect} from "react-redux"
 import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
 import JCard from "@public/components/JCard"
-import { Button, Col, Row, Table } from "antd";
+import { Button, Col, Popconfirm, Row, Table, Tag } from "antd";
 import { electfeesColumns } from "../columns";
-import {getElectfees, addElectfees } from "@power/actions/changeAction"
+import {getElectfees, addElectfees, cancelElectfees } from "@power/actions/changeAction"
 import SearchModular from "@power/components/Modular/SearchModular";
 import CompanyHeElement from "@power/components/Element/CompanyHeElement";
 import StatusElement from "@power/components/Element/StatusElement";
 import AddModular from "@power/components/Modular/AddModular";
 import CWatt from "./cwatt";
+import { Link } from "react-router-dom";
+import { StatusColor } from "@public/common/powerMapper";
 
 
 
@@ -47,13 +49,26 @@ class ExpendElectfees extends React.Component<Props> {
   }
 
   getCol(){
-    return [...electfeesColumns, {
+    return [...electfeesColumns,{
+      title: "状态",
+      dataIndex: "status",
+      render:(item:any)=><Tag color={StatusColor[item]}>{item?"有效":"作废"}</Tag>
+    }, {
       title: "操作",
+      width: 120,
       render: (item:any)=>{
         return (
           <>
-            <Button size="small" type="link">详情</Button>
-            <Button size="small" type="link">作废</Button>
+            <Link to={`/expend/electfees/${item.orderNo}/detail`}>
+              <Button size="small" type="link">详情</Button>
+            </Link>
+            {item.status?
+            <Popconfirm title="是否作废？" onConfirm={()=>{
+              this.props.actions.cancelElectfees({order: item.orderNo})
+            }}>
+              <Button size="small" type="link">作废</Button>
+            </Popconfirm>:null}
+            
           </>
         )
       }
@@ -105,13 +120,13 @@ class ExpendElectfees extends React.Component<Props> {
           title="新增电费支出"
           spinning={spinning}
           visible={addVisible}
-          onCancel={()=>this.setState({addVisible: false})}
+          onCancel={()=>this.setState({addVisible: false, companyHe:[]})}
           onOk={(values:any)=>{
             console.log(values)
             this.props.actions.addElectfees(values, ()=>{
               this.props.utils.OpenNotification("success")
               this.props.actions.getElectfees(params,{refresh: true})
-              this.setState({addVisible: false})
+              this.setState({addVisible: false, companyHe:[]})
             })
           }}
           data={[
@@ -133,7 +148,7 @@ class ExpendElectfees extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getElectfees, addElectfees}, dispatch)
+    actions: bindActionCreators({getElectfees, addElectfees, cancelElectfees}, dispatch)
   }
 }
 

@@ -30,6 +30,15 @@ const SearchModular:React.FC<Props> = ({
     submitSearch()
   }
 
+  const handleRules = (item:ItemType)=>{
+    if(typeof item.rules === 'boolean'){
+      return [{required: true, message: `${item.label}不能为空！`}]
+    }else if(typeof item.rules === 'object'){
+      return item.rules;
+    }
+    return [];
+  }
+
   return (
     <Card size="small">
       <div className={layout=="inline"?"flexbetween":""} >
@@ -49,6 +58,7 @@ const SearchModular:React.FC<Props> = ({
                 name={item.name}
                 initialValue={item.initialValue}
                 valuePropName={item.valuePropName || "value"}
+                rules={handleRules(item)}
               >
                 {getNode(item)}
               </Form.Item>

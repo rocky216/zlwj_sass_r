@@ -17,6 +17,7 @@ export interface ItemType {
   initialValue?:any;
   valuePropName?:string;
   notAll?:boolean;
+  rules?:any;
 }
 
 export const getNode = (item:ItemType)=>{

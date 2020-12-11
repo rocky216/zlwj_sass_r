@@ -11,11 +11,12 @@ interface Props {
   onChange?:any;
   notAll?:boolean;
   size?:SizeType;
+  style?:any;
 }
 
-const EndStatusElement: React.FC<Props> = ({value, onChange, notAll, size})=>{
+const EndStatusElement: React.FC<Props> = ({value, onChange, notAll, size, style})=>{
   return (
-    <Select size={size} value={value} onChange={(v)=>{
+    <Select size={size} style={style} value={value} onChange={(v)=>{
       if(onChange){
         onChange(v)
       }

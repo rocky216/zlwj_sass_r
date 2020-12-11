@@ -19,13 +19,24 @@ const gRtime = (arr: Moment[], sTime:string, eTime:string, format="YYYY-MM-DD")=
 }
 
 
+export const getVipCouponConfig = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-coupon-config/vipCouponConfig",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
 export const getTocouponList = (params:any, opt?:OptProps)=>{
   return async (dispatch:Function, getState:any)=>{
     const options:any = {
-      url: "/zlwj/api/powerDevice/sys/power-user-coupon/page",
+      url: "/zlwj/api/powerDevice/sys/power-coupon-activity/page",
       method: "get",
       data: {
-        couponType: "MONEY",
+        activityType: "2",
         ...(_.omit(params,["companyHe"])),
         companyId: params.companyHe[0]||"",
         itemId: params.companyHe[1]||"",
@@ -80,6 +91,7 @@ export const getMemcerList = (params:any, opt?:OptProps)=>{
       url: "/zlwj/api/powerDevice/sys/power-coupon-activity/page",
       method: "get",
       data: {
+        activityType: 1,
         ...(_.omit(params,["companyHe"])),
         companyId: params.companyHe[0]||"",
         itemId: params.companyHe[1]||"",
