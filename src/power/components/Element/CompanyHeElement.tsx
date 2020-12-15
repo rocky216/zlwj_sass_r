@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
-import {Cascader, TreeSelect} from "antd"
+import {Cascader, TreeSelect, Select} from "antd"
 import {getCompanyHe} from "@power/actions/appAction"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import _ from "lodash"
 
 const {TreeNode} = TreeSelect
+const {Option} = Select
 
 type TypeProps = undefined | "treeselect"
 
@@ -15,6 +16,7 @@ interface Props {
   onChange?:(value:any)=>void;
   value?:string[];
   type?:TypeProps;
+  notHe?:boolean;
 }
 
 const CompanyHeElement:React.FC<Props> = ({
@@ -22,12 +24,13 @@ const CompanyHeElement:React.FC<Props> = ({
   value,
   actions,
   companyhe,
-  type
+  type,
+  notHe
 })=>{
 
   useEffect(()=>{
-    actions.getCompanyHe({})
-  }, [])
+    actions.getCompanyHe({notHe})
+  }, [companyhe])
 
   const rCTreeNode = (arr:any[])=>{
     return arr?arr.map(item=>(
@@ -57,6 +60,18 @@ const CompanyHeElement:React.FC<Props> = ({
           >
             {rCTreeNode(companyhe)}
           </TreeSelect>
+        :notHe?(
+          <Select value={value} onChange={(v)=>{
+            if(onChange){
+              onChange(v)
+            }
+          }} placeholder="请选择公司">
+            {companyhe?companyhe.map(item=>(
+              <Option key={item.id} value={item.id}>{item.name}</Option>
+            )):null}
+            
+          </Select>
+        )
         :<Cascader 
           showSearch
           value={value} 

@@ -69,7 +69,7 @@ class DeviceDetail extends React.Component<Props> {
     const {spinning, utils, history} = this.props
     const {baseinfo, baseList, onlineLog, onlineTime, lineData, threeDays, signalTime, threeDaysMap} = this.state
     const {companyName, itemName, shedName, deviceName, online, } = baseinfo
-
+    
     
     return (
       <JCard spinning={spinning}> 

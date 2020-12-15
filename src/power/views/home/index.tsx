@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
 import JCard from "@public/components/JCard"
 import "./index.less"
-import { Button } from "antd";
+import { Button, Col, Row, Space } from "antd";
 
 const rootRef = React.createRef<HTMLDivElement>()
 
@@ -20,13 +20,42 @@ class HomePage extends React.Component<Props> {
     
     return (
       <JCard spinning={spinning}> 
-      <Button onClick={()=>(rootRef.current as any).requestFullscreen()}>全屏</Button>
-      <div ref={rootRef} style={{background: "#fff"}}>
-        <div className="question_title_content " >
-          <div className="describe2">
-
-          </div>
+      
+      <div ref={rootRef} style={{background: "#061d43"}}>
+        <div className="mgb10">
+          <Button onClick={()=>(rootRef.current as any).requestFullscreen()}>全屏</Button>
         </div>
+        <Row>
+          <Col span={8}>
+            <div className="flexbetween">
+              <div className="question_wrap " style={{width: "48%", height: 200}}>
+                <div className="box" >
+                  <div>
+                    378 设备在线
+                  </div>
+                  <div>
+                    78 设备离线
+                  </div>
+                </div>
+              </div>
+              <div className="question_wrap " style={{width: "48%", height: 200}} >
+                <div className="box">
+                  <div>
+                      306 今日订单
+                    </div>
+                    <div>
+                      158 充电中
+                    </div>
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col span={8}>
+          </Col>
+          <Col span={8}>
+          </Col>
+        </Row>
+        
       </div>
         
       </JCard>

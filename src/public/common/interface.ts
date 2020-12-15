@@ -6,6 +6,7 @@ export interface UtilsProps {
   getToken: ()=>any;
   submitFiles: (arg1:any[])=>string;
   echoFiles: (arg1:any)=> any[];
+  objectArray:(...arg:any)=>any[];
 }
 
 export interface IProps {

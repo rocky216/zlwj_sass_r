@@ -5,6 +5,46 @@ import {save, remove, load} from "react-cookies"
 import _ from "lodash"
 import moment, { Moment } from "moment"
 
+//对象转数组
+export const objectArray = (obj:any,label="label", id="id")=>{
+  let arr:any[] = []
+  _.each(obj, (item, attr)=>{
+    arr.push({
+      [id]: attr,
+      [label]: item
+    })
+  })
+  return arr
+}
+
+
+//处理公司/项目
+export const gCompanyHe = (cHe:any, companyId="companyId", itemId="itemId")=>{
+  console.log(typeof cHe)
+  if(!cHe || cHe==""){
+    return {
+      [companyId]:"",
+      [itemId]:"",
+    }
+  }
+  
+  if(typeof cHe === "string" || typeof cHe === "number"){
+    return {
+      [companyId]:cHe,
+      [itemId]:"",
+    }
+  }
+  if(_.isArray(cHe) && cHe.length==2){
+    return {
+      [companyId]:cHe[0],
+      [itemId]:cHe[1],
+    }
+  }
+  return {
+    [companyId]:"",
+    [itemId]:"",
+  }
+}
 
 //处理时间范围
 export const gRtime = (arr: Moment[], sTime:string, eTime:string, format="YYYY-MM-DD")=>{
@@ -31,8 +71,8 @@ export const echoFiles = (obj: string | any[])=>{
     _.each(arr, (item, index)=>{
       newArr.push({
         url: item,
-        uid: index+1,
-        name: index+1,
+        uid: index+item,
+        name: index+item,
       })
     })
   }

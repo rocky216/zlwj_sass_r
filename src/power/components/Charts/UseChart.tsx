@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
-import { Line, Column, DualAxes} from '@ant-design/charts';
+import { Line, Column, DualAxes, Pie } from '@ant-design/charts';
 import _ from "lodash";
 
-type ChartTypes = "line" | "column" | "dualAxes" 
+type ChartTypes = "line" | "column" | "dualAxes" | "pie"
 
 interface Props {
   data:any[];
@@ -54,6 +54,8 @@ const UseChart:React.FC<Props> = ({
         return <Column {...config} />
       case "dualAxes":
         return <DualAxes {...config} />
+      case "pie":
+        return <Pie {...config} />
     }
   }
 

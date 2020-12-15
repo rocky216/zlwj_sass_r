@@ -1,13 +1,45 @@
 import React from "react"
-import {PayType, Status, StatusColor} from "@public/common/powerMapper"
+import {PayType, Status, StatusColor, CouponType} from "@public/common/powerMapper"
 import { Tag, Image} from "antd"
 
+const UnitType:any = { M: "月", Y: "元", F: "分钟", D: "分钟"}
+export const CouponTypeBe:any = {VIP: "有效时长",  MONEY: "金额", TIME: "时间"}
+
+export const couponconfColumns = [
+  {
+    title: "劵名称",
+    dataIndex: "couponName"
+  },
+  {
+    title: "劵配图",
+    dataIndex: "couponIcon",
+    render: (item:any)=><Image src={item} width={80} height={80} />
+  },
+  {
+    title: "劵类型",
+    dataIndex: "couponType",
+    render:(item:string)=>CouponType[item]
+  },
+  {
+    title: "劵配置",
+    dataIndex: "unitNum",
+    render:(item:any, rows:any)=>CouponTypeBe[rows.couponType]+':'+item+UnitType[rows.unitType]
+  },
+  {
+    title: "历史发劵总数",
+    dataIndex: "allNum"
+  },
+  {
+    title: "当前有效劵总数",
+    dataIndex: "isStateNum"
+  }
+]
 
 export const memcerColumns = [
   {
     title: "活动图",
     dataIndex: "activityUrl",
-    render: (item:any)=><Image src={item} width="100" height="100" />
+    render: (item:any)=><Image src={item} width={80} height={80} />
   },
   {
     title: "公司",

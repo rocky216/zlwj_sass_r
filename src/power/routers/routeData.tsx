@@ -7,6 +7,7 @@ import cardRoute from "./routes/cardRoute"
 import incomeRoute from "./routes/incomeRoute"
 import expendRoute from "./routes/expendRoute"
 import monitorRoute from "./routes/monitorRoute"
+import statisRoute from "./routes/statisRoute"
 
 
 const getId = (arr:any[], key:string)=>{
@@ -60,6 +61,18 @@ export const routes = [
     id: "7",
     name: "监控管理",
     children: getId(monitorRoute,"7")
+  },
+  {
+    id: "8",
+    name: "数据统计",
+    children: getId(statisRoute,"8")
+  },
+  {
+    id: "9",
+    name: "推送日志",
+    path: "/pushlog",
+    exact: true,
+    component: lazy({loader: import("@power/views/pushlog")}),
   },
 ]
 

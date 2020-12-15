@@ -19,3 +19,5 @@ export const OrderStatusColor = ["green","orange","magenta","red","gold","cyan",
 export const EndStatus = ["","正常充饱结束","手动停止订单","负载丢失","时间到结束","过载结束","涓流充电时掉电","复位重启结束充电"]
 
 export const OrderType = ["", "余额", "卡", "券"]
+
+export const CouponType:any = {VIP: "会员券",  MONEY: "金额券", TIME: "时间券"}

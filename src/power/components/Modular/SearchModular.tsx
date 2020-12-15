@@ -13,6 +13,7 @@ interface Props {
   initialValues: any;
   resetValues?:any;
   layout?:FormLayout; //inline | vertical | horizontal
+  bordered?:boolean;
 }
 
 const SearchModular:React.FC<Props> = ({
@@ -21,7 +22,8 @@ const SearchModular:React.FC<Props> = ({
   submitSearch,
   initialValues,
   resetValues,
-  layout="inline"
+  layout="inline",
+  bordered
 })=>{
   const [form] = Form.useForm();
 
@@ -32,7 +34,7 @@ const SearchModular:React.FC<Props> = ({
 
   const handleRules = (item:ItemType)=>{
     if(typeof item.rules === 'boolean'){
-      return [{required: true, message: `${item.label}不能为空！`}]
+      return [{required: true, message: `${item.label||""}不能为空！`}]
     }else if(typeof item.rules === 'object'){
       return item.rules;
     }
@@ -40,7 +42,7 @@ const SearchModular:React.FC<Props> = ({
   }
 
   return (
-    <Card size="small">
+    <Card size="small" bordered={bordered} >
       <div className={layout=="inline"?"flexbetween":""} >
         <div style={layout=="inline"?{marginRight:30}:{marginBottom: 20}}  >
           {before}

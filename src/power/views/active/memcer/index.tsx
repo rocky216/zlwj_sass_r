@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
 import JCard from "@public/components/JCard"
-import {getMemcerList, statusActive, deleteActive} from "@power/actions/activeAction"
+import {getMemcerList, statusActive, deleteActive, addVipActive, editVipActive } from "@power/actions/activeAction"
 import {memcerColumns} from "../columns"
 import { Button, Popconfirm, Table } from "antd";
 import SearchModular from "@power/components/Modular/SearchModular";
@@ -12,6 +12,8 @@ import StatusElement from "@power/components/Element/StatusElement";
 import AddModular from "@power/components/Modular/AddModular";
 import UploadElement from "@power/components/Element/UploadElement";
 import Memcerconf from "./memcerconf"
+import _ from "lodash";
+import moment from "moment";
 
 
 interface Props extends IProps {
@@ -36,7 +38,8 @@ class ActiveMemcer extends React.Component<Props> {
   state = {
     addVisible: false,
     editVisible: false,
-    detail: ""
+    detail: {id:"",activityUrl:"", companyId: "", itemId:"", activityInfoList: [], activityStartTime: null,
+      activityEndTime: null, activityNo:""}
   }
 
   componentDidMount(){
@@ -58,7 +61,7 @@ class ActiveMemcer extends React.Component<Props> {
       render: (item:any)=>{
         return (
           <>
-            <Button type="link" size="small">编辑</Button>
+            <Button type="link" size="small" onClick={()=>this.setState({editVisible: true, detail: item})} >编辑</Button>
             <Popconfirm title="时候删除？" onConfirm={()=>{
               this.props.actions.deleteActive({id: item.id}, ()=>{
                 this.props.utils.OpenNotification("success")
@@ -72,6 +75,20 @@ class ActiveMemcer extends React.Component<Props> {
       }
     }]
   }
+
+  getActiveData(arr:any[]){
+    let newArr:any[] = []
+    _.each(arr, item=>{
+      newArr.push({
+        configId: item.couponId,
+        vipMoney: item.vipMoney,
+        vipDayMin: item.vipDayMin,
+      })
+    })
+    return newArr
+  }
+
+
 
   render() {
     const {spinning, utils, memcer} = this.props
@@ -113,19 +130,64 @@ class ActiveMemcer extends React.Component<Props> {
           visible={addVisible}
           onCancel={()=>this.setState({addVisible:false})}
           onOk={(values:any)=>{
-            console.log(values)
+            this.props.actions.addVipActive({
+              ...values,
+              activityImg: utils.submitFiles(values.activityImg)
+            }, ()=>{
+              this.props.utils.OpenNotification("success")
+              this.props.actions.getMemcerList(params, {refresh:true})
+              this.setState({addVisible: false})
+            })
           }}
           data={[
-            {label: "公司项目", name: "companyHe", type: <CompanyHeElement/>},
-            {label: "活动图片", name: "activityUrl", type: <UploadElement data={{fileType: "activity"}} />},
-            {label: "活动时间", name: "rtime", type: "rangepicker"},
-            {label: "会员劵配置", name: "config", type: "rangepicker"},
-            {label: "充值配置", name: "activityJson", type: <Memcerconf/>},
+            {label: "活动名称", name: "activityName", type: "input", rules:true},
+            {label: "公司项目", name: "companyHe", type: <CompanyHeElement/>, rules:true},
+            {label: "活动图片", name: "activityImg", type: <UploadElement data={{fileType: "activity"}} />, rules:true},
+            {label: "活动时间", name: "rtime", type: "rangepicker", rules:true},
+            {label: "会员劵配置", name: "activityJson", type: <Memcerconf/>, rules:true},
             {label: "活动途径", name: "activityObject", type: "select", selectList: [
-              {label: "业主app", id: "G"},
-              {label: "小程序用户", id: "W"},
-            ]},
-            {label: "状态", name: "status", type: "status", notAll: true},
+              {label: "业主app", id: 0},
+              {label: "小程序用户", id: 1},
+            ], rules:true},
+            {label: "状态", name: "status", type: "status", notAll: true, rules:true},
+            {label: "备注", name: "remark", type: "textarea"}
+          ]}
+        />
+
+        <AddModular
+          title="编辑活动"
+          spinning={spinning}
+          visible={editVisible}
+          onCancel={()=>this.setState({editVisible:false})}
+          initialValues={{...detail, 
+            activityImg: utils.echoFiles(detail.activityUrl),
+            companyHe: [detail.companyId, detail.itemId],
+            activityJson: this.getActiveData(detail.activityInfoList),
+            rtime: [moment(detail.activityStartTime),moment(detail.activityEndTime)]
+          }}
+          onOk={(values:any)=>{
+            this.props.actions.editVipActive({
+              ...values,
+              activityImg: utils.submitFiles(values.activityImg),
+              id: detail.id,
+              activityNo: detail.activityNo,
+            }, (res:any)=>{
+              this.props.utils.OpenNotification("success")
+              this.props.actions.getMemcerList(params, {obj:res, type:"edit"})
+              this.setState({editVisible: false})
+            })
+          }}
+          data={[
+            {label: "活动名称", name: "activityName", type: "input", rules:true},
+            {label: "公司项目", name: "companyHe", type: <CompanyHeElement/>, rules:true},
+            {label: "活动图片", name: "activityImg", type: <UploadElement data={{fileType: "activity"}} />, rules:true},
+            {label: "活动时间", name: "rtime", type: "rangepicker", rules:true},
+            {label: "会员劵配置", name: "activityJson", type: <Memcerconf/>, rules:true},
+            {label: "活动途径", name: "activityObject", type: "select", selectList: [
+              {label: "业主app", id: 0},
+              {label: "小程序用户", id: 1},
+            ], rules:true},
+            {label: "状态", name: "status", type: "status", notAll: true, rules:true},
             {label: "备注", name: "remark", type: "textarea"}
           ]}
         />
@@ -137,7 +199,7 @@ class ActiveMemcer extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getMemcerList, statusActive, deleteActive}, dispatch)
+    actions: bindActionCreators({getMemcerList, statusActive, deleteActive, addVipActive, editVipActive}, dispatch)
   }
 }
 

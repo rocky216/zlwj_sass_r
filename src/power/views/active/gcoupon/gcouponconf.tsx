@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Button, InputNumber, Select, Space } from "antd"
-import {getVipCouponConfig } from "@power/actions/activeAction"
+import {getTocouponConfig } from "@power/actions/activeAction"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import { CloseCircleOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons"
@@ -16,24 +16,23 @@ interface Props {
 
 
 
-const Memcerconf:React.FC<Props> = ({
+const Gcouponconf:React.FC<Props> = ({
   value=[],
   onChange,
   actions
 })=>{
-  const [vipcou, getVipcou] = useState([])
+  const [tocou, setTocou] = useState([])
 
   useEffect(()=>{
-    actions.getVipCouponConfig({},(res:any)=>{
-      getVipcou(res)
+    actions.getTocouponConfig({},(res:any)=>{
+      setTocou(res)
     })
   },[])
 
   const cData = ()=>{
     value.push({
       configId: "",
-      vipMoney: "",
-      vipDayMin: "",
+      couponNum: "",
     })
     if(onChange){
       onChange(_.cloneDeep(value))
@@ -68,25 +67,23 @@ const Memcerconf:React.FC<Props> = ({
       {value.map((item,index)=>(
         <div className="mgb10" key={index} style={{background: "#eee", padding: 10, position:"relative"}}>
           <Space direction="vertical">
-            <div style={{display:"flex"}}>
-              <div style={{width: 70}}>会员劵：</div>
-              <Select value={item.configId} onChange={(v)=>hChange(v,index)}>
-                {vipcou.map((item:any)=>(
-                  <Option key={item.id} value={item.id}>{item.couponName}</Option>
-                ))}
-              </Select>
-            </div>
-            <Space>
-              <div>
-                价格：<InputNumber min={0} value={item.vipMoney} onChange={(v)=>hInput(v,index, "vipMoney")} />元
+            <Space >
+              <div style={{display:"flex"}}>
+                <div style={{paddingTop: "6px"}}>赠：</div>
+                <Select value={item.configId} onChange={(v)=>hChange(v,index)} style={{minWidth: 140}}>
+                  {tocou.map((item:any)=>(
+                    <Option key={item.id} value={item.id}>{item.couponName}</Option>
+                  ))}
+                </Select>
               </div>
               <div>
-                每日：<InputNumber min={0} value={item.vipDayMin} onChange={(v)=>hInput(v,index, "vipDayMin")} />分钟
+                <InputNumber min={0} value={item.couponNum} onChange={(v)=>hInput(v,index, "couponNum")} />张
               </div>
             </Space>
+            
           </Space>
           <Button 
-            style={{position:"absolute", top: 30, right:-30}} type="link" size="small" 
+            style={{position:"absolute", top: 15, right:-30}} type="link" size="small" 
             icon={<CloseCircleOutlined style={{fontSize: 20}} 
             onClick={()=>rData(index)}  />}></Button>
         </div>
@@ -98,7 +95,7 @@ const Memcerconf:React.FC<Props> = ({
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getVipCouponConfig}, dispatch)
+    actions: bindActionCreators({getTocouponConfig}, dispatch)
   }
 }
 
@@ -108,4 +105,4 @@ const mapStateProps = ()=>{
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(Memcerconf);
+export default connect(mapStateProps, mapDispatchProps)(Gcouponconf);
