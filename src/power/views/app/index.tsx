@@ -12,6 +12,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 interface Props {
   actions:any;
+  location?:any;
 }
 
 class App extends React.Component<Props> {
@@ -21,6 +22,7 @@ class App extends React.Component<Props> {
   }
 
   render() {
+    const {location} = this.props
     
     return (
       <div className="myApp">
@@ -36,9 +38,9 @@ class App extends React.Component<Props> {
             <div className="logo"  />
             <SideBar/>
           </Sider>
-          <Layout className="content" style={{ marginLeft: 200 }}>
+          <Layout className="content" style={{ marginLeft: 200}}>
             <Header/>
-            <Content className="content_inner" >
+            <Content  className={"content_inner "+ (location.pathname=="/"?"contentBlackBg":"")} >
               <Routers/>
             </Content>
           </Layout>

@@ -5,6 +5,7 @@ import {IProps} from "@public/common/interface"
 import JCard from "@public/components/JCard"
 
 
+
 interface Props extends IProps {
 
 }

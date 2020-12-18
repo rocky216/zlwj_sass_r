@@ -6,6 +6,7 @@ import cardReducer from "./cardReducer"
 import changeReducer from "./changeReducer"
 import monitorReducer from "./monitorReducer"
 import statisReducer from "./statisReducer"
+import homeReducer from "./homeReducer"
 
 export default combineReducers({
   app: appReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   change: changeReducer,
   monitor: monitorReducer,
   statis: statisReducer,
+  home: homeReducer,
 })

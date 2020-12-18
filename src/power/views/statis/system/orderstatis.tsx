@@ -77,21 +77,21 @@ const OrderStatis:React.FC<Props> = ({
         <Col span={6}>
           <Card size="small" title="充电订单-金额统计" >
             {momeydata?
-            <PieChart angleField="countMoney" colorField="type" data={momeydata} />
+            <PieChart angleField="countMoney" colorField="type" data={momeydata.list} />
             :<Skeleton active />}
           </Card>
         </Col>
         <Col span={6}>
           <Card size="small" title="充电订单-类型分析" >
             {typetotal?
-            <PieChart angleField="countMoney" colorField="type" data={typetotal} />
+            <PieChart angleField="countMoney" colorField="type" data={typetotal.list} />
             :<Skeleton active />}
           </Card>
         </Col>
         <Col span={6}>
           <Card size="small" title="充电订单-类型分析" >
             {orderchannel?
-            <PieChart angleField="countMoney" colorField="type" data={orderchannel} />
+            <PieChart angleField="countMoney" colorField="type" data={orderchannel.list} />
             :<Skeleton active />}
           </Card>
         </Col>
