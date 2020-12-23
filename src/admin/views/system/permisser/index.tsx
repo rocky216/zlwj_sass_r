@@ -11,6 +11,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { DeleteElement } from "@admin/components/Element/Widget";
 import MenuPermisser from "./menupermisser"
 import _ from "lodash";
+import SeeMenu from "./seemenu"
 
 const {Option} = Select
 const {TextArea} = Input
@@ -92,10 +93,13 @@ class SystemPermisser extends React.Component<Props> {
     return (
       <JCard spinning={spinning}>
         <Row gutter={10}  key="a">
-          <Col span={8}>
+          <Col span={6}>
+            <SeeMenu/>
+          </Col>
+          <Col span={6}>
             <MenuPermisser {...this.props}/>
           </Col>
-          <Col span={8} >
+          <Col span={6} >
             <Card size="small" title="新增权限包" extra={<Button type="primary" 
               onClick={()=>this.setState({addPackageVisible: true})} >新增权限包</Button>} >
               <List 
@@ -127,7 +131,7 @@ class SystemPermisser extends React.Component<Props> {
               />
             </Card>
           </Col>
-          <Col span={8} >
+          <Col span={6} >
             <Card size="small" title={currentPackage.packageName} 
             extra={<Button disabled={currentPackage.packageName?false:true} type="primary" onClick={()=>{
               this.props.actions.savePackageMenu({

@@ -5,7 +5,7 @@ import {IProps} from "@public/common/interface"
 import JCard from "@public/components/JCard"
 import "./index.less"
 import {getDeviceSignal, getOrderWeekSum, getDeviceOnline, getPowerOnline, getOrderTopTen, getPowerToDayIncome,
-  getOrderWeekPay, getPowerOrderUnusualSum } from "@power/actions/homeAction"
+  getOrderWeekPay, getPowerOrderUnusualSum, changeHomeData, getToDayOrderSum} from "@power/actions/homeAction"
 import { Button, Col, Row, Space, Table } from "antd";
 import PieChart from "@power/components/Charts/PieChart"
 import UseChart from "@power/components/Charts/UseChart"
@@ -31,9 +31,20 @@ interface Props extends IProps {
   toDayIncome:any;
   orderWeekPay:any[];
   unusualsum:any[];
+  ordernowday:any;
 }
 
 class HomePage extends React.Component<Props> {
+
+  state = {
+    
+  }
+
+  static getDerivedStateFromProps(nextProps:Props, prevState:any){
+    
+    return null;
+  }
+
   
   componentDidMount(){
     
@@ -45,6 +56,7 @@ class HomePage extends React.Component<Props> {
     this.props.actions.getPowerToDayIncome(params)
     this.props.actions.getOrderWeekPay(params)
     this.props.actions.getPowerOrderUnusualSum(params)
+    this.props.actions.getToDayOrderSum(params)
     this.getsoket()
   }
 
@@ -54,14 +66,14 @@ class HomePage extends React.Component<Props> {
       rws.send('{"data":{"itemId":0,"companyId":0},"cmd":"cut_item","status":"1"}');
       
     });
-    rws.addEventListener("message", (value)=>{
-      console.log(value.data, "asas")
+    rws.addEventListener("message", (values:any)=>{
+      this.props.actions.changeHomeData(values.data)
     })
   }
 
   render() {
     const {spinning, utils, devicesignal, orderWeekSum, deviceonline, powerOnline, orderTopTen,
-      toDayIncome, orderWeekPay, unusualsum} = this.props
+      toDayIncome, orderWeekPay, unusualsum, ordernowday} = this.props
     
     return (
       <JCard spinning={spinning}> 
@@ -72,7 +84,11 @@ class HomePage extends React.Component<Props> {
         <div  className="home_left">17:55:15 2020年11月28日 星期六</div>
           <div  className="home_center">金庐名居智能充电桩实时监控</div>
           <div className="home_right">
-            <Button ghost onClick={()=>(rootRef.current as any).requestFullscreen()}><RetweetOutlined /></Button>
+            <Button type="link" onClick={()=>{
+              (rootRef.current as any).requestFullscreen()
+            }}>
+              <i className="icon iconfont icon-quanping" style={{fontSize: 30}}></i>
+            </Button>
           </div>
         </div>
         <Row gutter={10}>
@@ -82,22 +98,22 @@ class HomePage extends React.Component<Props> {
                 <div className="box" style={{display:"flex", alignItems:"center", justifyContent: "center"}} >
                   {deviceonline?<div>
                     <div>
-                      <span style={{fontSize: 30, color: "#70c1b3"}}>{deviceonline.deviceOff}</span> 设备在线
+                      <span style={{fontSize: 30, color: "#70c1b3"}}>{deviceonline.deviceOnline}</span> 设备在线
                     </div>
-                    <div><span style={{fontSize: 30, color: "#d90020"}} >{deviceonline.deviceOnline}</span> 设备离线</div>
+                    <div><span style={{fontSize: 30, color: "#d90020"}} >{deviceonline.deviceOff}</span> 设备离线</div>
                   </div>:null}
                 </div>
               </div>
               <div className="question_wrap " style={{width: "48%", height: 150}} >
                 <div className="box" style={{display:"flex", alignItems:"center", justifyContent: "center"}}>
-                  <div>
+                  {ordernowday?<div>
                     <div>
-                      <span style={{fontSize: 30, color: "#02a7f0"}}>306</span> 今日订单
+                      <span style={{fontSize: 30, color: "#02a7f0"}}>{ordernowday.orderSum}</span> 今日订单
                     </div>
                     <div>
-                      <span style={{fontSize: 30, color: "#70c1b3"}} >158</span> 充电中
+                      <span style={{fontSize: 30, color: "#70c1b3"}} >{ordernowday.inTheCharging}</span> 充电中
                     </div>
-                  </div>
+                  </div>:null}
                 </div>
               </div>
             </div>
@@ -311,12 +327,13 @@ class HomePage extends React.Component<Props> {
 const mapDispatchProps = (dispatch:any)=>{
   return {
     actions: bindActionCreators({getDeviceSignal, getOrderWeekSum, getDeviceOnline, getPowerOnline,
-      getOrderTopTen, getPowerToDayIncome, getOrderWeekPay, getPowerOrderUnusualSum }, dispatch)
+      getOrderTopTen, getPowerToDayIncome, getOrderWeekPay, getPowerOrderUnusualSum, changeHomeData, getToDayOrderSum}, dispatch)
   }
 }
 
 const mapStateProps = (state:any)=>{
   return {
+    ordernowday: state.home.ordernowday,
     unusualsum: state.home.unusualsum,
     orderWeekPay: state.home.orderWeekPay,
     toDayIncome: state.home.toDayIncome,

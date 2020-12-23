@@ -7,6 +7,7 @@ export interface UtilsProps {
   submitFiles: (arg1:any[])=>string;
   echoFiles: (arg1:any)=> any[];
   objectArray:(...arg:any)=>any[];
+  tData:(...arg:any)=>any[];
 }
 
 export interface IProps {

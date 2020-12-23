@@ -1,5 +1,5 @@
 import {APP_LOADING_START, APP_LOADING_END, APP_LOADING_NOT} from "@power/constant/appTypes"
-import {getToken, OpenNotification, addIndex, Pagination, submitFiles, echoFiles, objectArray} from "@public/utils"
+import {getToken, OpenNotification, addIndex, Pagination, submitFiles, echoFiles, objectArray, tData} from "@public/utils"
 
 let initialState = {
   spinning: false,
@@ -11,7 +11,8 @@ let initialState = {
     getToken,
     submitFiles,
     echoFiles,
-    objectArray
+    objectArray,
+    tData
   }
 }
 

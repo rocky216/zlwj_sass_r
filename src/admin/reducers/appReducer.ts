@@ -1,5 +1,5 @@
 import {APP_LOADING_START, APP_LOADING_END, APP_LOADING_NOT} from "@admin/constant/app"
-import {getToken, OpenNotification, addIndex, Pagination, submitFiles, echoFiles} from "@public/utils"
+import {getToken, OpenNotification, addIndex, Pagination, submitFiles, echoFiles, tData} from "@public/utils"
 
 let initialState = {
   spinning: false,
@@ -10,7 +10,8 @@ let initialState = {
     Pagination,
     getToken,
     submitFiles,
-    echoFiles
+    echoFiles,
+    tData,
   }
 }
 

@@ -3,6 +3,16 @@ import {storetApi, stateApi} from "@public/utils/action"
 const ACTION = "APP"
 
 
+export const saveSysMenusTree = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-menus-tree/save",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
 export const getCompanyHeShe = (params:any, next?:Function)=>{
   return async (dispatch:Function, getState:any)=>{

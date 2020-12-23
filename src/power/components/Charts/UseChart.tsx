@@ -30,7 +30,7 @@ const UseChart:React.FC<Props> = ({
         alias: yFieldName[index]
       }
     })
-    console.log(obj)
+    
     return obj
   }
 

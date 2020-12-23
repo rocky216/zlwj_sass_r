@@ -2,7 +2,7 @@ import React from "react"
 import {connect} from "react-redux"
 import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
-import { Button, Card, Input, Space, Tree, Popconfirm, Skeleton} from "antd";
+import { Button, Card, Input, Space, Tree, Popconfirm, Skeleton, Select} from "antd";
 import AddPage from "@admin/components/Page/AddPage";
 import {getSelectChildTree, addSelectChildTree, editSelectChildTree, deleteSelectChildTree} from "@admin/actions/systemAction"
 import _ from "lodash";
@@ -132,6 +132,11 @@ class MenuPermisser extends React.Component<Props> {
           data={[
             {label: "权限名称", name: "menuName", type: Input, rules: true},
             {label: "权限key", name: "menuKey", type: Input, rules: true},
+            {label: "菜单级别", name: "menuLevel", type: Select, selectList: [
+              {name: "项目级别", id: 0},
+              {name: "公司级别", id: 1},
+              {name: "系统级别", id: 2},
+            ]},
             {label: "权限URL", name: "menuUrl", type: Input},
             {label: "备注", name: "remark", type: Input},
           ]}

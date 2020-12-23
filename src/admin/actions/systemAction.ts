@@ -2,6 +2,9 @@ import {SYSTEM_LOADING_START, SYSTEM_LOADING_END, SYSTEM_LOADING_NOT} from "@adm
 import {fetch} from "@public/utils"
 import MC from "memory-cache"
 import _ from "lodash"
+import {storetApi, stateApi} from "@public/utils/action"
+const ACTION = "SYSTEM"
+import {OptProps} from "@public/utils/action"
 
 
 
@@ -73,6 +76,31 @@ const optionList = async (opt: OptionListProps)=>{
   }
   
 }
+
+
+export const addBatchMenus = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-menu/addBatchMenus",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getTreeDateByType = (params:any, next?:Function)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-menus-tree/getTreeDateByType",
+      method: "get",
+      data: params
+    }
+    storetApi(options, "databytype", dispatch, ACTION, {})
+  }
+}
+
+
 
 export const savePackageMenu = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{

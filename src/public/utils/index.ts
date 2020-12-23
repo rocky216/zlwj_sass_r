@@ -5,6 +5,21 @@ import {save, remove, load} from "react-cookies"
 import _ from "lodash"
 import moment, { Moment } from "moment"
 
+
+//Tree控件数据处理
+export const tData = (arr:any[], title:string = "title", key:string="key", children:string="children")=>{
+  if(!tData && !arr.length) return []
+  _.each(arr, item=>{
+    item.title = item[title]
+    item.key=item[key]
+    item.children = item[children]
+    if(item[children] && item[children].length>0){
+      tData(item[children], title, key, children)
+    }
+  })
+  return arr;
+}
+
 //对象转数组
 export const objectArray = (obj:any,label="label", id="id")=>{
   let arr:any[] = []

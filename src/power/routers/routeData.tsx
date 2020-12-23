@@ -74,8 +74,14 @@ export const routes = [
     exact: true,
     component: lazy({loader: import("@power/views/pushlog")}),
   },
+  {
+    id: "10",
+    name: "权限菜单",
+    path: "/permismenu",
+    exact: true,
+    component: lazy({loader: import("@power/views/permismenu")}),
+  },
 ]
-
 
 
 let routeData:any[] = [];

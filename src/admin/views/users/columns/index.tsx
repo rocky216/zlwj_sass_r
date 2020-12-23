@@ -80,7 +80,7 @@ export const usersColumns:ColumnsType<ColumsProps> = [
     title: "姓名",
     dataIndex: "sysUserInfo",
     render(item) {
-      return item.realName;
+      return item?item.realName:"";
     }
   },
   {
@@ -94,7 +94,7 @@ export const usersColumns:ColumnsType<ColumsProps> = [
   {
     title: "性别",
     dataIndex: "sysUserInfo",
-    render: item=>Sex[item.gender]
+    render: item=>item?Sex[item.gender]:""
   },
   {
     title: "积分",
