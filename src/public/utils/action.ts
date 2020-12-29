@@ -8,6 +8,7 @@ interface OptionsProps {
   url: string;
   method: Method;
   data?:any;
+  del?:string;
 }
 
 export interface OptProps {
@@ -16,6 +17,8 @@ export interface OptProps {
   type?: string; //edit | add | delete
   obj?: any;
 }
+//缓存调试
+// MC.debug(true)
 
 export const storetApi = async (options:OptionsProps, keyName:string, dispatch:any, ACTION:string, opt?:OptProps)=>{
   const {refresh=false, next, type, obj} = opt || {};
@@ -23,10 +26,12 @@ export const storetApi = async (options:OptionsProps, keyName:string, dispatch:a
     let key = options.url+JSON.stringify(options.data)
     let isCache = MC.get(key)
     if(!isCache || refresh ){
+      
       dispatch({
         type: `${ACTION}_LOADING_START`
       })
       let data = await fetch(options)
+      
       if(next)next(data)
       MC.put(key, data)
       dispatch({
@@ -34,14 +39,17 @@ export const storetApi = async (options:OptionsProps, keyName:string, dispatch:a
         [keyName]: data
       })
     }else{
+      
       if(obj && _.size(obj)){
         let index = _.findIndex(isCache.list, (o:any)=>o.id==obj.id)
         if(type=="edit"){
+          console.log(121)
           isCache.list[index] = _.assign(isCache.list[index], obj);
         }else if(type=="add"){
           isCache.list[index] = _.assign(isCache.list[index], obj);
         }
         MC.put(key, isCache)
+        
         dispatch({
           type: `${ACTION}_LOADING_NOT`,
           [keyName]: isCache
@@ -72,6 +80,9 @@ export const stateApi = async (options: OptionsProps, dispatch:any, ACTION:strin
 
     let data:any = await fetch(options)
     if(next)next(data)
+    // if(options.del){
+    //   MC.del(options.del)
+    // }
     dispatch({
       type: `${ACTION}_LOADING_END`,
     })

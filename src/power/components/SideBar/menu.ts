@@ -9,6 +9,9 @@ const menus =  [
     name: "项目管理",
     children: [
       {
+        name:"设备类型管理",
+      },
+      {
         name: "项目配置",
       },
       {
@@ -102,6 +105,8 @@ const menus =  [
     name: "推送日志",
   },
 ]
+
+
 const rMenus = (arr:any[])=>{
   _.each(arr, item=>{
     let index = _.findIndex(routes, o=>o.name==item.name)
@@ -110,9 +115,11 @@ const rMenus = (arr:any[])=>{
       item.key = routes[index]["id"]
       item.path = routes[index]["path"]
     }
+
     if(item.children && item.children.length){
       rMenus(item.children)
     }
+    
     
   })
 }

@@ -7,14 +7,32 @@ import changeReducer from "./changeReducer"
 import monitorReducer from "./monitorReducer"
 import statisReducer from "./statisReducer"
 import homeReducer from "./homeReducer"
+import { connectRouter } from 'connected-react-router'
 
-export default combineReducers({
-  app: appReducer,
-  project: projectReducer,
-  active: activeReducer,
-  card: cardReducer,
-  change: changeReducer,
-  monitor: monitorReducer,
-  statis: statisReducer,
-  home: homeReducer,
-})
+const createRootReducer = (history:any) =>  {
+  
+  return combineReducers({
+    router: connectRouter(history),
+    app: appReducer,
+    project: projectReducer,
+    active: activeReducer,
+    card: cardReducer,
+    change: changeReducer,
+    monitor: monitorReducer,
+    statis: statisReducer,
+    home: homeReducer,
+  })
+}
+
+export default createRootReducer
+
+// export default combineReducers({
+//   app: appReducer,
+//   project: projectReducer,
+//   active: activeReducer,
+//   card: cardReducer,
+//   change: changeReducer,
+//   monitor: monitorReducer,
+//   statis: statisReducer,
+//   home: homeReducer,
+// })

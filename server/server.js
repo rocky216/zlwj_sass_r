@@ -30,6 +30,12 @@ app.get(`/admin`, (req, res)=>{
 app.get(`/power`, (req, res)=>{
   res.render("power.html")
 })
+app.get(`/exopen`, (req, res)=>{
+  res.render("./demo/demo-monitor.html")
+})
+app.get(`/exopen1`, (req, res)=>{
+  res.render("./demo/demo-monitor1.html")
+})
 
 
 

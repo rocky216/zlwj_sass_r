@@ -6,8 +6,6 @@ import JCard from "@public/components/JCard"
 import {getPowerMonitorOrder } from "@power/actions/monitorAction"
 import { Card, Col, Row, Table, Tabs } from "antd";
 import SearchModular from "@power/components/Modular/SearchModular";
-import CompanyHeElement from "@power/components/Element/CompanyHeElement";
-import CompanyHeSheElement from "@power/components/Element/CompanyHeSheElement";
 import moment from "moment"
 import {orderMonitorColumns} from "../columns"
 
@@ -91,7 +89,6 @@ class MonitorOrder extends React.Component<Props> {
 
           }}
           data={[
-            {label: "公司/项目", name: "companyHe", type: <CompanyHeElement/>},
             {label: "公司/项目", name: "rtime", type: "rangepicker"}
           ]}
         />

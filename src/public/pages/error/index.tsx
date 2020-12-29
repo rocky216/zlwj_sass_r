@@ -1,13 +1,21 @@
-import React from "react"
-import {Image} from "antd"
+import React, { useEffect } from "react"
+import {Button, Image, Result} from "antd"
+import { useHistory } from "react-router-dom"
 
-const ErrorPage = ()=>{
+const ErrorPage:React.FC = ()=>{
+  let history = useHistory();
 
+  useEffect(()=>{
+    
+  },[])
   
   return (
-    <div style={{margin: "auto", width: 500}}>
-      <Image src="/images/error404.svg" width={500} preview={false} />
-    </div>
+    <Result
+      status="403"
+      title="访问错误"
+      subTitle="对不起, 您没有权限访问该页面."
+      extra={<Button type="primary" onClick={()=>history.goBack()} >点击返回</Button>}
+    />
   )
 }
 

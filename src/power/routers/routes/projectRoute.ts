@@ -47,4 +47,10 @@ export default [
       }
     ]
   },
+  {
+    name: "设备类型管理",
+    path: "/project/devicetype",
+    exact: true,
+    component: lazy({loader: import("@power/views/proman/devicetype")}),
+  },
 ]

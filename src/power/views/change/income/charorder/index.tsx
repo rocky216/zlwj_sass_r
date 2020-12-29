@@ -6,7 +6,6 @@ import JCard from "@public/components/JCard"
 import { Checkbox, Col, Row, Table } from "antd";
 import {getPowerOrder } from "@power/actions/changeAction"
 import SearchModular from "@power/components/Modular/SearchModular";
-import CompanyHeElement from "@power/components/Element/CompanyHeElement";
 import OrderStatusElement from "@power/components/Element/OrderStatusElement";
 import EndStatusElement from "@power/components/Element/EndStatusElement";
 import PayTypeElement from "@power/components/Element/PayTypeElement";
@@ -86,7 +85,6 @@ class IncomeCharorder extends React.Component<Props> {
                   {label: "iotId", name: "iotId", type: "input"},
                   {label: "创建时间", name: "rtime", type: "rangepicker"},
                   {label: "订单状态", name: "orderStatus", type: <OrderStatusElement/> },
-                  {label: "公司/项目", name: "companyHe", type: <CompanyHeElement/> },
                   {name: "haveRefund", type: <Checkbox>有退款订单</Checkbox>, valuePropName: "checked"},
                   {name: "haveReset", type: <Checkbox>重启次数大于0</Checkbox>, valuePropName: "checked"},
                   {label: "结束状态", name: "endStatus", type: <EndStatusElement/> },

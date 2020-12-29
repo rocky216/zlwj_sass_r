@@ -3,6 +3,10 @@ import {Switch, Route} from "react-router-dom"
 import routeData from "./routeData"
 import ErrorPage from "@public/pages/error"
 import _ from "lodash"
+import AuthRoute from "./AuthRoute"
+import { bindActionCreators } from "redux"
+import { connect } from "react-redux"
+import {setRouteProps} from "@power/actions/appAction"
 
 interface RouteConf {
   path: string;
@@ -11,23 +15,44 @@ interface RouteConf {
   key?: string
 }
 
+interface Props {
+  actions:any;
+}
 
-class Routers extends React.Component {
+
+class Routers extends React.Component<Props> {
 
   render() {
+    const {actions} = this.props
     return (
       <Switch>
         {routeData.map((item:any, index:number)=>(
-          <Route 
-            key={index} 
+          item.component?<AuthRoute
+            key={item.id} 
+            auth={item.id}
+            level={item.level}
             exact={item.exact} 
             path={item.path} 
-            component={item.component} />
+            component={item.component} 
+            />:null
         ))}
+        <Route path="/error" component={ErrorPage} />
         <Route component={ErrorPage} />
       </Switch>
     );
   }
 }
 
-export default Routers
+const mapDispatchProps = (dispatch:any)=>{
+  return {
+    actions: bindActionCreators({setRouteProps }, dispatch)
+  }
+}
+
+const mapStateProps = (state:any)=>{
+  return {
+
+  }
+}
+
+export default connect(mapStateProps, mapDispatchProps)(Routers)

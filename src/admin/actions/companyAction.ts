@@ -3,6 +3,10 @@ import {fetch} from "@public/utils"
 import MC from "memory-cache"
 import _ from "lodash"
 import moment from "moment"
+import {storetApi, stateApi} from "@public/utils/action"
+const ACTION = "APP"
+import {OptProps} from "@public/utils/action"
+
 
 
 /**
@@ -74,6 +78,29 @@ const optionList = async (opt: OptionListProps)=>{
     dispatch({type: COMPANY_LOADING_END})
   }
   
+}
+
+
+export const getSystemRoleMenus = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-system-role/systemRoleMenu",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const addCompanyUser = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/system//sys/sys-user-company/addUserCompany",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
 }
 
 export const getCompanyStaff = (opt:any)=>{

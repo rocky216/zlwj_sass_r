@@ -54,7 +54,6 @@ class ProConfPage extends React.Component<Props> {
       render:(item:any, rows:any)=>{
         return (
           <Select size="small" value={item} onChange={(val)=>{
-            console.log(val)
             this.props.actions.statusProConf({id: rows.id}, (res:any)=>{
               this.props.actions.getProConfList(params, {obj: res, type: "edit"})
             })

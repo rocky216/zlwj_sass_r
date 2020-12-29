@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <title>EZOPEN播放协议</title>
+  <style>
+    body {
+      margin: 0;
+    }
+    .hint {
+      font-size: 14px;
+      line-height: 3em;
+      color: gray;
+    }
+    #url,
+    #url2,
+    #accessToken {
+      width: 100%;
+    }
+
+    .btn-container {
+      margin: 10px;
+    }
+    .normal {
+      color: green;
+      margin: 5px;
+    }
+    .error {
+      color: red;
+      margin: 5px;
+    }
+    ::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+    }
+  </style>
+</head>
+<script>
+</script>
+
+<body>
+  <script src="../ezuikit.js"></script>
+  <!-- <script src="../js/jsPlugin-1.2.0.js"></script> -->
+  <script src="../js/jquery.min.js"></script>
+  <div id="playWind" style="width: 600px; height: 400px;">
+  </div>
+  <script>
+    $(function(){
+
+      $("#playWind").css({
+        width: $(window).width(),
+        height: $(window).height(),
+      })
+
+      var decoder = new EZUIKit.EZUIPlayer({
+        id: 'playWind',
+        autoplay: true,
+        url: "ezopen://open.ys7.com/D68174541/3.live",
+        accessToken: "at.b561rcgv9qg88l8l0wv315nt0u1g5y7o-60sphhduy6-03yunpg-yl2g8ep4a",
+        decoderPath: '',
+        width: $(window).width(),
+        height: $(window).height(),
+      });
+
+    })
+  </script>
+</body>
+
+</html>

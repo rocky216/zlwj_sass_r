@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5387088",
+      "name": "大件车辆通行",
+      "font_class": "dajiancheliangtonghang",
+      "unicode": "eb5e",
+      "unicode_decimal": 60254
+    },
+    {
+      "icon_id": "14198262",
+      "name": "车辆通行",
+      "font_class": "cheliangtonghang",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
       "icon_id": "16833771",
       "name": "屏幕_全屏",
       "font_class": "quanping",

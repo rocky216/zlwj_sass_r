@@ -7,7 +7,6 @@ import {getCouponOrder } from "@power/actions/changeAction"
 import { Col, Row, Table } from "antd";
 import SearchModular from "@power/components/Modular/SearchModular";
 import PayTypeElement from "@power/components/Element/PayTypeElement";
-import CompanyHeElement from "@power/components/Element/CompanyHeElement";
 import {memcerorderColumns} from "../columns"
 
 
@@ -42,36 +41,30 @@ class IncomeMemcerorder extends React.Component<Props> {
     return (
       <JCard spinning={spinning}> 
         <div key="a">
-          <Row>
-            <Col span={20}>
-              <Table size="small" columns={memcerorderColumns} dataSource={couponorder?utils.addIndex(couponorder.list):[]}
-              pagination={utils.Pagination(couponorder, page=>{
-                params.current = page;
-                this.props.actions.getCouponOrder(params)
-              })} />
-            </Col>
-            <Col span={4}>
-              <SearchModular
-                layout="vertical"
-                initialValues={params}
-                resetValues={resetParams}
-                submitSearch={(values:any)=>{
-                  if(!values){
-                    params = resetParams
-                  }else{
-                    params = {...params, ...values}
-                  }
-                  this.props.actions.getCouponOrder(params)
-                }}
-                data={[
-                  {label:"订单号", name: "orderNo", type: "input"},
-                  {label:"订单时间", name: "rtime", type: "rangepicker"},
-                  {label:"下单途径", name: "orderChannel", type: <PayTypeElement/>},
-                  {label:"公司/小区", name: "companyHe", type: <CompanyHeElement/>},
-                ]}
-              />
-            </Col>
-          </Row>
+          <SearchModular
+            initialValues={params}
+            resetValues={resetParams}
+            submitSearch={(values:any)=>{
+              if(!values){
+                params = resetParams
+              }else{
+                params = {...params, ...values}
+              }
+              this.props.actions.getCouponOrder(params)
+            }}
+            data={[
+              {label:"订单号", name: "orderNo", type: "input"},
+              {label:"订单时间", name: "rtime", type: "rangepicker"},
+              {label:"下单途径", name: "orderChannel", type: <PayTypeElement/>},
+            ]}
+          />
+        </div>
+        <div key="b">
+          <Table size="small" columns={memcerorderColumns} dataSource={couponorder?utils.addIndex(couponorder.list):[]}
+            pagination={utils.Pagination(couponorder, page=>{
+              params.current = page;
+              this.props.actions.getCouponOrder(params)
+            })} />
         </div>
       </JCard>
     );

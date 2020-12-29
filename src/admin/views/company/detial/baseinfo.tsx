@@ -98,7 +98,8 @@ class CompanyBaseInfo extends React.Component<Props> {
   }
 
   getPackageMenu(item:any){
-    this.setState({currentPackage: item})
+    console.log(item)
+    this.setState({currentPackage: item, systemId: item.systemId})
     this.props.actions.getCompanyAuthPackageMenu({packageId: item.id}, (res:any)=>{
       this.setState({currentKeys: res})
     })
@@ -153,7 +154,7 @@ class CompanyBaseInfo extends React.Component<Props> {
                 checkable
                 checkedKeys={currentKeys}
                 defaultExpandAll
-                systemId={"25"}
+                systemId={systemId}
               />
             </Card>
           </Col>

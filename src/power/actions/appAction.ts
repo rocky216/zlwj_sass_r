@@ -1,7 +1,54 @@
 import {APP_LOADING_START, APP_LOADING_END, APP_LOADING_NOT} from "@power/constant/appTypes"
-import {storetApi, stateApi} from "@public/utils/action"
+import {storetApi, stateApi, OptProps} from "@public/utils/action"
 const ACTION = "APP"
+let timer:any;
 
+
+
+export const getDeviceTypeList = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-device-type/deviceTypeList",
+      method: "get",
+      data: params
+    }
+    storetApi(options, "devicetype", dispatch, ACTION, opt)
+  }
+}
+
+export const setRouteProps = (params:any)=>{
+  return (dispatch:Function, getState:any)=>{
+    clearTimeout(timer)
+    timer = setTimeout(()=>{
+      dispatch({
+        type: APP_LOADING_NOT,
+        level:params
+      })
+    }, 0)
+  }
+}
+
+export const changeCompanyItem = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/system-module/cutCompanyItem",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getBaseInfo = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/system-module/selectTemAndSystemItem",
+      method: "get",
+      data: params
+    }
+    storetApi(options, "base", dispatch, ACTION, opt)
+  }
+}
 
 export const saveSysMenusTree = (params:any, next?:(...arg:any)=>void)=>{
   return async (dispatch:Function, getState:any)=>{

@@ -5,8 +5,49 @@ import _ from "lodash"
 import moment from "moment"
 
 
+export const addTypeCallback = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-device-type/addTypeCallback",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
+export const deletePowerDevicetype = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-device-type/deleteType",
+      method: "post",
+      data: params,
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
+export const changePowerDevicetype = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-device-type/composite",
+      method: "post",
+      data: params,
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getPowerDevicetype = (params:any, opt?:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/powerDevice/sys/power-device-type/page",
+      method: "get",
+      data: params
+    }
+    storetApi(options, "devicetype", dispatch, ACTION, opt)
+  }
+}
 
 export const getSeparaccountLog = (params:any, opt?:OptProps)=>{
   return async (dispatch:Function, getState:any)=>{

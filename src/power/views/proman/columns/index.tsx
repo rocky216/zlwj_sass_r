@@ -3,6 +3,25 @@ import { Tag } from "antd";
 import {WhetherType, PayType, FuseStatus, FuseStatusColor, OnLineType, OnLineTypeColor} from "@public/common/powerMapper"
 
 
+export const deviceTypeColumns = [
+  {
+    title: "设备编码",
+    dataIndex: "typeCode"
+  },
+  {
+    title: "设备类型",
+    dataIndex: "typeName"
+  },
+  {
+    title: "设备类型统计",
+    dataIndex: "deviceCount"
+  },
+  {
+    title: "备注",
+    dataIndex: "remark"
+  },
+]
+
 export const separaccountLogColumns = [
   {
     title: "创建信息",

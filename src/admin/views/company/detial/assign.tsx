@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
 import JCard from "@admin/components/JCard"
 import {getUserSystemAuth, addUserSystemAuth, deleteUserSystemPro, addUserCompanyRole, addCompanyUserProject, 
-  deleteUserSystemRole, deleteUserSystem} from "@admin/actions/companyAction"
+  deleteUserSystemRole, deleteUserSystem, getSystemRoleMenus} from "@admin/actions/companyAction"
 import _ from "lodash";
 import { Button, Card, Col, Popconfirm, Row, Space, Tag, Tree } from "antd";
 import AddPage from "@admin/components/Page/AddPage";
@@ -12,6 +12,7 @@ import SystemElement from "@admin/components/Element/SystemElement";
 import { DeleteOutlined, DragOutlined, PlusOutlined } from "@ant-design/icons";
 import RoleElement from "@admin/components/Element/RoleElement";
 import ProjectElement from "@admin/components/Element/ProjectElement";
+import MenuTree from "@admin/components/Page/MenuTree";
 
 interface Props extends IProps {
 
@@ -25,7 +26,12 @@ class AssignAuth extends React.Component<Props> {
     addRoleVisible: false,
     addRoleDetail: {id: ""},
     addProVisible: false,
-    addProDetail: {id: ""}
+    addProDetail: {id: ""},
+    currentPackage: {
+      packageName: ""
+    },
+    currentKeys: [],
+    systemId: ""
   }
 
   componentDidMount(){
@@ -68,11 +74,24 @@ class AssignAuth extends React.Component<Props> {
   titleRender(item:any){
     return (
       <div className="flexbetween">
-        <span>{item.title}{item.type=="item"?<span style={{color: "red"}}>(项目)</span>:null}</span>
+        <span onClick={()=>{
+          if(item.type=="role"){
+            let arr = item.singleStr.split("-")
+            this.setState({systemId:arr[0]})
+            this.props.actions.getSystemRoleMenus({
+              companyId: this.props.match.params.id,
+              systemId: arr[0],
+              roleId: arr[1],
+            }, (res:any)=>{
+              console.log(res)
+              this.setState({currentKeys:res})
+            })
+          }
+        }} >{item.title}{item.type=="item"?<span style={{color: "red"}}>(项目)</span>:null}</span>
         <Space size={20}>
           {item.type=="system"?<PlusOutlined 
             onClick={()=>this.setState({addRoleVisible: true, addRoleDetail: item})} />:null}
-          {item.type=="system" && item.systemLevel=="XM"?
+          {item.type=="system"?
             <DragOutlined  onClick={()=>this.setState({addProVisible: true, addProDetail: item})} />:null}
           <Popconfirm title="是否删除？" onConfirm={this.deleteRole.bind(this, item)}>
             <DeleteOutlined onClick={(e:any)=>e.stopPropagation()} />
@@ -115,11 +134,19 @@ class AssignAuth extends React.Component<Props> {
     }
   }
 
+  getPackageMenu(item:any){
+    console.log(item)
+    this.setState({currentPackage: item, systemId: item.systemId})
+    this.props.actions.getCompanyAuthPackageMenu({packageId: item.id}, (res:any)=>{
+      this.setState({currentKeys: res})
+    })
+  }
   
 
   render() {
     const {spinning, utils, match} = this.props
-    const {companysys, addSysVisible, addRoleVisible, addRoleDetail, addProVisible, addProDetail} = this.state
+    const {companysys, addSysVisible, addRoleVisible, addRoleDetail, addProVisible, addProDetail, currentPackage, 
+      currentKeys, systemId} = this.state
 
 
     return (
@@ -132,6 +159,17 @@ class AssignAuth extends React.Component<Props> {
                 blockNode
                 titleRender={this.titleRender.bind(this)}
                 treeData={this.handleData(companysys)}
+              />
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card size="small" title={currentPackage.packageName}>
+              <MenuTree
+                disabled
+                checkable
+                checkedKeys={currentKeys}
+                defaultExpandAll
+                systemId={systemId}
               />
             </Card>
           </Col>
@@ -210,7 +248,7 @@ class AssignAuth extends React.Component<Props> {
 const mapDispatchProps = (dispatch:any)=>{
   return {
     actions: bindActionCreators({getUserSystemAuth, addUserSystemAuth, deleteUserSystemPro, addUserCompanyRole, 
-      addCompanyUserProject, deleteUserSystemRole, deleteUserSystem}, dispatch)
+      addCompanyUserProject, deleteUserSystemRole, deleteUserSystem, getSystemRoleMenus}, dispatch)
   }
 }
 

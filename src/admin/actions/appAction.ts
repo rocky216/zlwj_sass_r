@@ -1,6 +1,21 @@
 import {APP_LOADING_START, APP_LOADING_END, APP_LOADING_NOT} from "@admin/constant/app"
 import {fetch} from "@public/utils"
 import MC from "memory-cache"
+import {storetApi, stateApi} from "@public/utils/action"
+const ACTION = "APP"
+import {OptProps} from "@public/utils/action"
+
+
+export const selectUser = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/system/sys/sys-user/selectUserByInfo",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
 
 export const getCompanyProject = (params:any, next?:Function)=>{

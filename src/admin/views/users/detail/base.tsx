@@ -25,12 +25,13 @@ class UserBaseInfo extends React.Component<IProps> {
 
   state = {
     detail: {
-      avatarUrl: ""
+      avatarUrl: "",
+      id: ""
     },
     baseForm: [
       {label: "头像", name: "avatarUrl", type: <UploadElement/> },
       {label: "用户ID", name: "temId", type: <Input disabled /> },
-      {label: "姓名", name: "realName", type: <Input/> },
+      {label: "姓名", name: "realName", type: <Input/>},
       {label: "昵称", name: "nickName", type: <Input disabled /> },
       {label: "电话", name: "language", type: <InputNumber style={{width: "100%"}} /> },
       {label: "邮箱", name: "email", type: <Input/> },
@@ -52,7 +53,7 @@ class UserBaseInfo extends React.Component<IProps> {
   onFinish(values: any){
     this.props.actions.editUserInfo({
       ...values,
-      id: this.props.match.params.id,
+      id: this.state.detail.id,
       avatarUrl: this.props.utils.submitFiles(values.avatarUrl)
     }, ()=>{
       this.props.utils.OpenNotification("success")
@@ -68,7 +69,7 @@ class UserBaseInfo extends React.Component<IProps> {
         <Col span={8}>
           <Card size="small" title="基础信息" 
             extra={<Button type="primary" onClick={()=>this.formRef.current?.submit()}>保存</Button>}>
-            {_.size(detail)>1?
+            {_.size(detail)>2?
             <Form ref={this.formRef} {...layout} 
               onFinish={this.onFinish.bind(this)}
               initialValues={{...detail, avatarUrl: utils.echoFiles(detail.avatarUrl)}} >

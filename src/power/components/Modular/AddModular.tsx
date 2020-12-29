@@ -48,7 +48,7 @@ const AddModular:React.FC<Props> = ({
 
   const handleRules = (item:ItemTypeProps)=>{
     if(typeof item.rules === 'boolean'){
-      return [{required: true, message: `${item.label}不能为空！`}]
+      return [{required: true, message: `${item.label || ""}不能为空！`}]
     }else if(typeof item.rules === 'object'){
       return item.rules;
     }

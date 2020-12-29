@@ -88,9 +88,7 @@ let routeData:any[] = [];
 
 const handleRoute = (arr: any[], obj:any=null)=>{
   _.each(arr, async (item, index)=>{
-    if(item.component){
-      routeData.push(item)
-    }
+    routeData.push(item)
     if(item.children && item.children.length>0){
       handleRoute(item.children, item)
     }

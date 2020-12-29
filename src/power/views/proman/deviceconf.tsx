@@ -12,6 +12,7 @@ import {getDeviceList, statusDevice, deleteDevice, addDevice, editDevice, create
 import {devicesColumns} from "./columns"
 import AddModular from "@power/components/Modular/AddModular";
 import { Link } from "react-router-dom";
+import DeviceTypeElement from "@power/components/Element/DeviceTypeElement";
 
 const {Option} = Select
 
@@ -183,9 +184,7 @@ class DeviceConffPage extends React.Component<Props> {
             {label: "设备序列号", name: "deviceSerial", type: "input", rules: true},
             {label: "端口数量", name: "portType", type: "inputNumber", rules: true},
             {label: "设备名称	", name: "deviceName", type: "input", rules: true},
-            {label: "设备类型", name: "deviceBrand", type: "select", selectList: [
-              {label: "魔方", id: "MF"}
-            ], rules: true},
+            {label: "设备类型", name: "deviceBrand", type: <DeviceTypeElement/>, rules: true},
           ]}
         />
         <AddModular
@@ -211,9 +210,7 @@ class DeviceConffPage extends React.Component<Props> {
             {label: "设备序列号", name: "deviceSerial", type: "input", rules: true},
             {label: "端口数量", name: "portType", type: "inputNumber", rules: true},
             {label: "设备名称	", name: "deviceName", type: "input", rules: true},
-            {label: "设备类型", name: "deviceBrand", type: "select", selectList: [
-              {label: "魔方", id: "MF"}
-            ], rules: true},
+            {label: "设备类型", name: "deviceBrand", type: <DeviceTypeElement/>, rules: true},
           ]}
         />
 

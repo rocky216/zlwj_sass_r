@@ -7,7 +7,6 @@ import {getDevicesDays, getDeviceSignalTotal, getFusePortTotal, getPowerDevice,
   getPowerSignal, getPowerOffline,  getPowerAvgport, getPowerAvgorder } from "@power/actions/monitorAction"
 import { Button, Card, Col, Row, Skeleton, Table, Tabs, Tag } from "antd";
 import SearchModular from "@power/components/Modular/SearchModular";
-import CompanyHeElement from "@power/components/Element/CompanyHeElement";
 import CompanyHeSheElement from "@power/components/Element/CompanyHeSheElement";
 import {deviceOnlineColumns, deviceSignalColumns, deviceOfflineColumns, devicePortColumns, 
   deviceAvgportColumns, deviceAvgorderColumns } from "../columns/index"
@@ -179,7 +178,6 @@ class MonitorDevice extends React.Component<Props> {
             this.initial(values)
           }}
           data={[
-            {label: "公司/小区", name: "companyHe", type: <CompanyHeElement onChange={(v)=>this.setState({companyHeId:v})} />, rules: true},
             {label: "充电棚", name: "shedId", type: <CompanyHeSheElement companyHeId={companyHeId} />, rules: true},
           ]}
         />

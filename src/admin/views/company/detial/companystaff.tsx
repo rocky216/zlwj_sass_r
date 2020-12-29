@@ -4,12 +4,13 @@ import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
 import JCard from "@admin/components/JCard"
 import { Button, Card, Input, InputNumber, Popconfirm, Select, Table } from "antd";
-import {getCompanyStaff } from "@admin/actions/companyAction"
+import {getCompanyStaff, addCompanyUser } from "@admin/actions/companyAction"
 import {usersColumns} from "@admin/views/users/columns"
 import {statusSysUser} from "@admin/actions/userAction"
 import Search from "@admin/components/Submit/Search";
 import { Link } from "react-router-dom";
 import AddPage from "@admin/components/Page/AddPage";
+import SearchStaff from "@admin/components/Element/SearchStaff";
 
 
 const {Option} = Select
@@ -95,14 +96,14 @@ class CompanyStaff extends React.Component<Props> {
   }
 
   render() {
-    const {spinning, utils, companystaff} = this.props
+    const {spinning, utils, companystaff, match} = this.props
     const {addVisible} = this.state
 
 
     return (
       <JCard spinning={spinning}> 
         <Search
-          before={<Button type="primary">新增</Button>}
+          before={<Button type="primary" onClick={()=>this.setState({addVisible: true})} >新增</Button>}
           initialValues={params}
           resetValues={resetParams}
           handleSearch={this.handleSearch.bind(this)}
@@ -123,15 +124,25 @@ class CompanyStaff extends React.Component<Props> {
           })}/>
         </Card>
 
-        {/* <AddPage
+        <AddPage
+          title="新增员工"
           spinning={spinning}
           visible={addVisible}
           onCancel={()=>this.setState({addVisible: false})}
-          onOk={()=>{}}
+          onOk={(values:any)=>{
+            this.props.actions.addCompanyUser({
+              companyId: match.params.id,
+              temId:values.temId
+            }, ()=>{
+              utils.OpenNotification("success")
+              this.initial({...params, refresh:true})
+              this.setState({addVisible: false})
+            })
+          }}
           data={[
-            {label: ""}
+            {label: "选择员工", name: "temId", type: <SearchStaff/>}
           ]}
-        /> */}
+        />
 
       </JCard>
     );
@@ -140,7 +151,7 @@ class CompanyStaff extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getCompanyStaff, statusSysUser}, dispatch)
+    actions: bindActionCreators({getCompanyStaff, statusSysUser, addCompanyUser }, dispatch)
   }
 }
 
@@ -148,7 +159,7 @@ const mapStateProps = (state:any)=>{
   return {
     companystaff: state.company.companystaff,
     utils: state.app.utils,
-    spinning: state.app.spinning
+    spinning: state.company.spinning
   }
 }
 
