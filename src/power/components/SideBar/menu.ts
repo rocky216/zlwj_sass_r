@@ -3,7 +3,10 @@ import _ from "lodash"
 
 const menus =  [
   {
-    name: "工作台",
+    name: "看板",
+  },
+  {
+    name: "系统看板",
   },
   {
     name: "项目管理",

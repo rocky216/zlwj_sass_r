@@ -23,7 +23,9 @@
     "paths": {
       "@public/*": ["src/public/*"],
       "@admin/*": ["src/admin/*"],
-      "@power/*": ["src/power/*"]
+      "@power/*": ["src/power/*"],
+      "@sass/*": ["src/sass/*"],
+      "@plate/*": ["src/plate/*"],
     }
   },
   "include": [

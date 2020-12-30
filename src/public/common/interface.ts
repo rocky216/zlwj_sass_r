@@ -13,6 +13,7 @@ export interface UtilsProps {
 export interface IProps {
   match: any;
   history:any;
+  location:any;
   actions: any;
   utils: UtilsProps;
   spinning: boolean;

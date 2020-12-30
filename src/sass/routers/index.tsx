@@ -1,7 +1,7 @@
 import React from "react"
 import {Switch, Route} from "react-router-dom"
 import loadable from 'loadable-components'
-import App from "@admin/views/app"
+import App from "@sass/views/app"
 
 const Home = loadable(() => import('../views/home'))
 

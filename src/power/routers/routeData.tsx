@@ -1,6 +1,7 @@
 import _ from "lodash"
 import lazy from "@public/utils/lazy"
 import Home from "@power/views/home"
+import SystemHomePage from "@power/views/home/systemhome"
 import projectRoute from "./routes/projectRoute"
 import activeRoute from "./routes/activeRoute"
 import cardRoute from "./routes/cardRoute"
@@ -24,9 +25,10 @@ const getId = (arr:any[], key:string)=>{
 export const routes = [
   {
     id: "1",
-    name: "工作台",
+    name: "看板",
     path: "/",
     exact: true,
+    level: 2,
     component: Home
   },
   {
@@ -80,6 +82,13 @@ export const routes = [
     path: "/permismenu",
     exact: true,
     component: lazy({loader: import("@power/views/permismenu")}),
+  },
+  {
+    id: "11",
+    name: "系统看板",
+    path: "/systemhome",
+    exact: true,
+    component: SystemHomePage
   },
 ]
 

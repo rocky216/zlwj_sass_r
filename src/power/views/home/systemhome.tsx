@@ -17,7 +17,7 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 
 
 let params = {
-  // selectType: ""
+  selectType: "all"
 }
 
 const rootRef = React.createRef<HTMLDivElement>()
@@ -34,7 +34,7 @@ interface Props extends IProps {
   ordernowday:any;
 }
 
-class HomePage extends React.Component<Props> {
+class SystemHomePage extends React.Component<Props> {
 
   state = {
     
@@ -347,5 +347,5 @@ const mapStateProps = (state:any)=>{
   }
 }
 
-export default connect(mapStateProps, mapDispatchProps)(HomePage)
+export default connect(mapStateProps, mapDispatchProps)(SystemHomePage)
 

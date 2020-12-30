@@ -47,7 +47,7 @@ class App extends React.Component<Props> {
           </Sider>
           <Layout className="content" style={{ marginLeft: 200}}>
             <Header><Head/></Header>
-            <Content  className={"content_inner "+ (location.pathname=="/"?"contentBlackBg":"")} >
+            <Content  className={"content_inner "+ (location.pathname=="/" || location.pathname=="/systemhome"?"contentBlackBg":"")} >
               <Routers/>
             </Content>
           </Layout>
