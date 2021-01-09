@@ -4,6 +4,7 @@ import HomePage from "@plate/views/home"
 import otherRoute from "./routes/otherRoute"
 import confRoute from "./routes/confRoute"
 import statisRoute from "./routes/statisRoute"
+import parkRoute from "./routes/parkRoute"
 
 
 const getId = (arr:any[], key:string)=>{
@@ -40,6 +41,7 @@ export const routes = [
     exact: true,
     level: 2,
     component: lazy({loader: import("@plate/views/park")}),
+    children: getId(parkRoute,"3")
   },
   {
     id: "4",

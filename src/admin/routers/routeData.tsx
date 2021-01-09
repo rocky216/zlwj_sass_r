@@ -79,9 +79,27 @@ const routes = [
   {
     id: "4",
     name: "资源管理",
-    path: "/resource",
     exact: true,
-    component: lazy({loader: import("@admin/views/resource")})
+    children: [
+      {
+        id: "4-01",
+        name: "系统资源管理",
+        path: "/resource",
+        component: lazy({loader: import("@admin/views/resource/system")}),
+      },
+      {
+        id: "4-02",
+        name: "资源类型管理",
+        path: "/restype",
+        component: lazy({loader: import("@admin/views/resource/restype")}),
+      },
+      {
+        id: "4-03",
+        name: "水印管理",
+        path: "/watermark",
+        component: lazy({loader: import("@admin/views/resource/watermark")}),
+      },
+    ]
   },
   {
     id: "5",

@@ -3,7 +3,6 @@ import {Route, Switch, withRouter} from "react-router-dom"
 import Login from "@public/pages/login"
 import App from "./app";
 import "./index.less"
-import TestPlate from "@power/views/plate"
 
 
 

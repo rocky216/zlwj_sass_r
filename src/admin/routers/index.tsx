@@ -4,14 +4,7 @@ import routeData from "./routeData"
 import ErrorPage from "@public/pages/error"
 import _ from "lodash"
 
-interface RouteConf {
-  path: string;
-  componet?: any;
-  exact?: boolean;
-  key?: string
-}
 
-import CompanyDetailPage from "@admin/views/company/detial"
 
 class Routers extends React.Component {
 

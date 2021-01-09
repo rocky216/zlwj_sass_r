@@ -1,3 +1,6 @@
+import OpenCloseElement from "@plate/components/Element/OpenCloseElement";
+import BeInputNumber from "@public/components/Element/BeInputNumber";
+import { Button, InputNumber } from "antd";
 import React from "react"
 
 
@@ -7,9 +10,9 @@ class HomePage extends React.Component {
   }
   render() {
     return (
-      <div>
-        HomePage
-        <div id="login_container"></div>
+      <div style={{width: 200}}>
+        <BeInputNumber  suffix="as" />
+        <OpenCloseElement />
       </div>
     );
   }

@@ -7,6 +7,9 @@ module.exports = {
   power: { 
     '@primary-color': '#fa8c16'
   },
+  plate: { 
+    '@primary-color': '#13c2c2'
+  },
   sass: { 
     '@primary-color': '#1DA57A'
   },

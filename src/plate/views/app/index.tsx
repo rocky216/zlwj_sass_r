@@ -4,19 +4,33 @@ import Routers from "@plate/routers";
 import "./index.less"
 import { connect } from "react-redux";
 import SideBar from "@plate/components/SideBar";
+import {getBaseInfo} from "@plate/actions/appAction"
+import { bindActionCreators } from "redux";
+import Loading from "@public/components/Loading"
 
 const { Header, Content, Sider } = Layout;
 
-class App extends React.Component {
+interface Props {
+  actions:any;
+  base:any;
+}
+
+class App extends React.Component<Props> {
+
+  componentDidMount(){
+    this.props.actions.getBaseInfo({systemId: 27}, {refresh: true})
+  }
+
   render() {
+    const {base} = this.props
     
     return (
-      <div className="myApp">
+      base?<div className="myApp">
         <Layout>
         <Sider
             style={{
               overflow: 'auto',
-              height: '100vh',
+              height: '100vh', 
               position: 'fixed',
               left: 0,
             }}
@@ -31,16 +45,22 @@ class App extends React.Component {
             </Content>
           </Layout>
         </Layout>
-      </div>
+      </div>:<Loading/>
     );
+  }
+}
+
+const mapDispatchProps = (dispatch:any)=>{
+  return {
+    actions: bindActionCreators({getBaseInfo }, dispatch)
   }
 }
 
 const mapStateToProps = (state:any)=>{
   console.log(state)
   return {
-
+    base: state.app.base
   }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchProps)(App)

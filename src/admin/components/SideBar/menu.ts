@@ -20,9 +20,25 @@ export default [
     path: "/company"
   },
   {
-    name: "系统资源管理",
+    name: "资源管理",
     key: "4",
-    path: "/resource"
+    children: [
+      {
+        name: "系统资源管理",
+        key: "4-01",
+        path: "/resource"
+      },
+      {
+        name: "资源类型管理",
+        key: "4-02",
+        path: "/restype"
+      },
+      {
+        name: "水印管理",
+        key: "4-03",
+        path: "/watermark"
+      },
+    ]
   },
   {
     name: "定时任务",
