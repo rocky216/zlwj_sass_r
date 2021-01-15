@@ -241,6 +241,8 @@ export const editSysResource = (params:any, next:Function)=>{
   }
 }
 
+
+
 export const addSysResource = (params:any, next:Function)=>{
   return async (dispatch:Function, getState:any)=>{
     dispatch({
@@ -262,6 +264,22 @@ export const addSysResource = (params:any, next:Function)=>{
       console.log(e)
       dispatch({type: OTHER_LOADING_END})
     }
+  }
+}
+
+export const getSystemLink = (opt:any)=>{
+  return async (dispatch:Function, getState:any)=>{
+
+    const {params, obj, next, type, refresh=false} = opt
+    const options:any = {
+      url: "/zlwj/api/resource/link-type/selectSystemLink",
+      method: "get",
+      data: params
+    }
+    optionList({
+      options,
+      dispatch,
+      keyName: "systemlink", obj, next, refresh, type})
   }
 }
 

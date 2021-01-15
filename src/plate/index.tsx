@@ -7,8 +7,10 @@ import {ConfigProvider } from "antd"
 import zhCN from 'antd/es/locale/zh_CN';
 import Index from "./views/index"
 import store from "./store"
+import moment from 'moment'
+import 'moment/locale/zh-cn';
 
-
+moment.locale('zh-cn');
 
 //热更新
 if( (module as any).hot) { 
@@ -18,7 +20,7 @@ if( (module as any).hot) {
 ReactDOM.render(
   <Provider store={store}>
     <HashRouter> 
-      <ConfigProvider  locale={zhCN}>
+      <ConfigProvider locale={zhCN}>
         <Index/>
       </ConfigProvider>
     </HashRouter>

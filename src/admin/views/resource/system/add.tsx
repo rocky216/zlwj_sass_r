@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import { Button, Form, Input, Modal, Upload } from "antd"
+import { Button, Form, Input, Modal, Select, Upload } from "antd"
 import { connect } from "react-redux";
 import _ from "lodash";
-import UploadElement from "@public/components/Element/UploadElement";
 
+const {Option} = Select
 
 const layout = {
   labelCol: { span: 4 },
@@ -16,6 +16,7 @@ interface Props {
   utils:any;
   onCancel:()=>void;
   onOk:(...arg0:any)=>void;
+  systemlink:any;
 }
 
 const AddResource: React.FC<Props> = ({
@@ -24,9 +25,11 @@ const AddResource: React.FC<Props> = ({
   title,
   utils,
   onOk,
+  systemlink,
 })=>{
   const [form] = Form.useForm();
   const [files, setFiles] = useState()
+  const [linkCode, setLinkCode] = useState("")
 
   const normFile = (e:any) => {
     console.log('Upload event:', e);
@@ -43,10 +46,9 @@ const AddResource: React.FC<Props> = ({
       setFiles(data)
       form.setFieldsValue({
         resourceId: data.id,
-        resourceDownload: data.downloadUrl,
-        resourceStorage: data.filePath,
-        fileSuffix: data.fileSuffix,
-        fileSize: data.fileSize,
+        downloadUrl: data.downloadUrl,
+        resourceSuffix: data.fileSuffix,
+        resourceSize: data.fileSize,
       })
       e.fileList = [e.file]
     }
@@ -77,15 +79,19 @@ const AddResource: React.FC<Props> = ({
       onOk={()=>form.submit()}
     >
       <Form form={form} {...layout} onFinish={onFinish}>
+        <Form.Item label="资源类型" name="linkCode" rules={[{required: true}]}>
+          <Select onChange={(v:any)=>setLinkCode(v)}>
+            {systemlink?systemlink.map((item:any)=>(
+              <Option key={item.linkCode} value={item.linkCode}>{item.linkName}</Option>
+            )):null}
+          </Select>
+        </Form.Item>
         <Form.Item label="资源名称" name="annexName" rules={[{required: true}]}>
           <Input/>
         </Form.Item>
         <Form.Item label="资源KEY" name="resourceKey" rules={[{required: true}]}>
           <Input/>
         </Form.Item>
-        {/* <Form.Item label="上传附件" name="filearr" rules={[{required: true}]} >
-          <UploadElement type="file" data={{fileType: "carInfoMode"}}  />
-        </Form.Item> */}
         <Form.Item label="上传附件" name="filearr" rules={[{required: true}]} 
           valuePropName="fileList"
           getValueFromEvent={normFile}>
@@ -96,7 +102,7 @@ const AddResource: React.FC<Props> = ({
               token: utils.getToken(),
               resourceType: "0",
               linkType: "sysResources",
-              fileType: "carInfoMode",
+              fileType: linkCode,
               fileSize: 10240,
               isFlag: 0
             }}
@@ -108,16 +114,13 @@ const AddResource: React.FC<Props> = ({
         <Form.Item label="附件id" name="resourceId" rules={[{required: true}]}>
           <Input disabled/>
         </Form.Item>
-        <Form.Item label="下载URL" name="resourceDownload" >
+        <Form.Item label="下载URL" name="downloadUrl" >
           <Input disabled/>
         </Form.Item>
-        <Form.Item label="存储路径" name="resourceStorage" >
+        <Form.Item label="文件后缀" name="resourceSuffix" rules={[{required: true}]}>
           <Input disabled/>
         </Form.Item>
-        <Form.Item label="文件后缀" name="fileSuffix" rules={[{required: true}]}>
-          <Input disabled/>
-        </Form.Item>
-        <Form.Item label="文件大小" name="fileSize" rules={[{required: true}]}>
+        <Form.Item label="文件大小" name="resourceSize" rules={[{required: true}]}>
           <Input disabled/>
         </Form.Item>
       </Form>
@@ -128,6 +131,7 @@ const AddResource: React.FC<Props> = ({
 
 const mapStateProps = (state:any)=>{
   return {
+    systemlink: state.other.systemlink,
     utils: state.app.utils
   }
 }

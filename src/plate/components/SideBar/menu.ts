@@ -1,4 +1,4 @@
-import { routes } from "@plate/routers/routeData"
+import routes from "@plate/routers/routeData"
 import _ from "lodash"
 
 
@@ -23,9 +23,31 @@ const menus = [
   },
   {
     name: "其他配置记录",
+    children:[
+      {
+        name: "电子围栏"
+      },
+      {
+        name: "区域限制通行"
+      },
+      {
+        name: "车辆黑白名单"
+      },
+    ]
   },
   {
     name: "配置管理",
+    children:[
+      {
+        name: "系统黑白名单"
+      },
+      {
+        name: "设备配置"
+      },
+      {
+        name: "设备类型管理"
+      },
+    ]
   },
   {
     name: "数据统计",
@@ -44,7 +66,6 @@ const rMenus = (arr:any[])=>{
     if(item.children && item.children.length){
       rMenus(item.children)
     }
-    
     
   })
 }

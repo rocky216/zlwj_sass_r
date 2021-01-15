@@ -4,7 +4,7 @@ import Routers from "@plate/routers";
 import "./index.less"
 import { connect } from "react-redux";
 import SideBar from "@plate/components/SideBar";
-import {getBaseInfo} from "@plate/actions/appAction"
+import {getBaseInfo, companyItemInitial} from "@plate/actions/appAction"
 import { bindActionCreators } from "redux";
 import Loading from "@public/components/Loading"
 
@@ -18,6 +18,7 @@ interface Props {
 class App extends React.Component<Props> {
 
   componentDidMount(){
+    this.props.actions.companyItemInitial({})
     this.props.actions.getBaseInfo({systemId: 27}, {refresh: true})
   }
 
@@ -52,7 +53,7 @@ class App extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getBaseInfo }, dispatch)
+    actions: bindActionCreators({getBaseInfo, companyItemInitial}, dispatch)
   }
 }
 

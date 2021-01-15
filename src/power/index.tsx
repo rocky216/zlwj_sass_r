@@ -13,7 +13,7 @@ import Index from './views';
 import { ConnectedRouter } from 'connected-react-router'
 
 
-moment.locale('zh-cn');
+moment.locale('zh-cn'); 
 
 const store = configureStore();
 

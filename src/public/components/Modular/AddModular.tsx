@@ -7,6 +7,7 @@ interface ItemTypeProps extends ItemType {
   rules?: boolean | any[];
   wrapperCol?:any;
   labelCol?:any;
+  valuePropName?:any;
 }
 
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
   data:ItemTypeProps[];
   initialValues?:any;
   spinning?:boolean;
+  
 }
 
 const layout = {
@@ -33,7 +35,7 @@ const AddModular:React.FC<Props> = ({
   title,
   data,
   initialValues,
-  spinning,
+  spinning,  
 })=>{
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false)
@@ -41,7 +43,12 @@ const AddModular:React.FC<Props> = ({
   useEffect(()=>{
     if(visible){
       setModalVisible(true)
-      form.setFieldsValue(initialValues)
+      if(initialValues){
+        form.setFieldsValue(initialValues)
+      }else{
+        form.resetFields()
+      }
+      
     }
 
   }, [visible])
@@ -85,6 +92,7 @@ const AddModular:React.FC<Props> = ({
             rules={handleRules(item)}
             wrapperCol={item.wrapperCol}
             labelCol={item.labelCol}
+            valuePropName={item.valuePropName}
             >
             {getNode(item)}
           </Form.Item>

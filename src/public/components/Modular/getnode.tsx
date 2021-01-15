@@ -10,7 +10,7 @@ interface selectListProps {
 }
 
 export interface ItemType {
-  label?: string,
+  label?: ReactNode,
   name: string,
   type: any,
   selectList?: selectListProps[];
@@ -18,23 +18,24 @@ export interface ItemType {
   valuePropName?:string;
   notAll?:boolean;
   rules?:any;
+  disabled?:boolean;
 }
 
 export const getNode = (item:ItemType)=>{
   switch(item.type){
     case "input":
-      return <Input/>
+      return <Input disabled={item.disabled} />
     case "textarea":
-      return <TextArea/>
+      return <TextArea disabled={item.disabled} />
     case "inputNumber":
-      return <InputNumber style={{width: "100%"}}/>
+      return <InputNumber style={{width: "100%"}} disabled={item.disabled} />
     case "datepicker":
-      return <DatePicker style={{width: "100%"}}/>
+      return <DatePicker style={{width: "100%"}} disabled={item.disabled} />
     case "rangepicker":
-      return <RangePicker style={{width: "100%"}}/>
+      return <RangePicker style={{width: "100%"}} disabled={item.disabled} />
     case "select":
       return (
-        <Select>
+        <Select disabled={item.disabled} >
           {item.selectList?.map(elem=>(
             <Option key={elem.id} value={elem.id} >{elem.label}</Option>
           ))}
@@ -42,7 +43,7 @@ export const getNode = (item:ItemType)=>{
       )
     case "status":
       return (
-        <Select>
+        <Select disabled={item.disabled} >
           {item.notAll?null:<Option value="">全部</Option>}
           <Option value={1}>启用</Option>
           <Option value={0}>禁用</Option>

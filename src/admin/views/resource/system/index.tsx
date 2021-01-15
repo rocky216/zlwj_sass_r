@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import { bindActionCreators } from "redux";
 import {IProps} from "@public/common/interface"
 import JCard from "@admin/components/JCard"
-import {getSysResource, addSysResource, editSysResource, deleteSysResource} from "@admin/actions/otherAction"
+import {getSysResource, addSysResource, editSysResource, deleteSysResource, getSystemLink} from "@admin/actions/otherAction"
 import {resourceColumns} from "../columns"
 import { Button, Card, Input, Popconfirm, Table, Upload} from "antd";
 import Search from "@admin/components/Submit/Search";
@@ -36,6 +36,7 @@ class ResourcePage extends React.Component<Props> {
 
   componentDidMount(){
     this.props.actions.getSysResource({params})
+    this.props.actions.getSystemLink({})
   }
 
   getCol(){
@@ -142,7 +143,7 @@ class ResourcePage extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({getSysResource, addSysResource, editSysResource, deleteSysResource}, dispatch)
+    actions: bindActionCreators({getSysResource, addSysResource, editSysResource, deleteSysResource, getSystemLink}, dispatch)
   }
 }
 

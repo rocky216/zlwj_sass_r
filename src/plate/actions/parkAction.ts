@@ -1,12 +1,75 @@
-import {APP_LOADING_START, APP_LOADING_END, APP_LOADING_NOT} from "@plate/constant/appTypes"
+import {PARK_LOADING_START, PARK_LOADING_END, PARK_LOADING_NOT} from "@plate/constant/parkTypes"
 import { gRtime } from "@public/utils"
 import {storetApi, stateApi, OptProps} from "@public/utils/action"
 import _ from "lodash"
+import moment from "moment"
 const ACTION = "PARK"
 
 
 
+export const getParkLeaseOrder = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-park-activity-order/page",
+      method: "get",
+      data: {
+        ...(_.omit(params,["rtime"])),
+        ...gRtime(params.rtime, "startTime", "endTime"),
+        parkId: params.parkId?params.parkId[params.parkId.length-1]:""
+      } 
+    }
+    storetApi(options, "leaseorder", dispatch, ACTION, opt)
+  }
+}
 
+export const deleteFeeGroup = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-license/bachDeletePlate",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getFeeGroup = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-parking-fee-group/selectFeeGroup",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const definedLicenseCount = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-license/definedLicenseCount",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const bachContract = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-license/bachContract",
+      method: "post",
+      data: {
+        ...params,
+        valid: params.valid?1:0,
+        invalid: params.invalid?1:0,
+        contractDate: moment(params.contractDate).format("YYYY-MM-DD")
+      }
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
 export const changegetParkCar = (params:any, next?:(...arg:any)=>void)=>{
   return async (dispatch:Function, getState:any)=>{

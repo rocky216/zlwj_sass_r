@@ -1,8 +1,9 @@
 import React, { useState } from "react"
-import { Button, Form, Input, Modal, Upload } from "antd"
+import { Button, Form, Input, Modal, Select, Upload } from "antd"
 import { connect } from "react-redux";
 import _ from "lodash";
 
+const {Option} = Select
 
 const layout = {
   labelCol: { span: 4 },
@@ -16,6 +17,7 @@ interface Props {
   onCancel:()=>void;
   onOk:(...arg0:any)=>void;
   detail: any;
+  systemlink:any;
 }
 
 const EditResource: React.FC<Props> = ({
@@ -25,9 +27,11 @@ const EditResource: React.FC<Props> = ({
   utils,
   onOk,
   detail,
+  systemlink
 })=>{
   const [form] = Form.useForm();
   const [files, setFiles] = useState()
+  const [linkCode, setLinkCode] = useState("")
 
   const normFile = (e:any) => {
     console.log('Upload event:', e);
@@ -87,40 +91,17 @@ const EditResource: React.FC<Props> = ({
         <Form.Item label="资源KEY" name="resourceKey" rules={[{required: true}]}>
           <Input/>
         </Form.Item>
-        <Form.Item label="上传附件" name="filearr" 
-          valuePropName="fileList"
-          getValueFromEvent={normFile}>
-          <Upload
-            action="/zlwj/api/resource/file/uploadFile"
-            name="file"
-            data={{
-              token: utils.getToken(),
-              resourceType: "0",
-              linkType: "sysResources",
-              fileSize: 10240,
-              isFlag: 0
-            }}
-            beforeUpload={beforeUpload}
-          >
-            <Button>点击上传</Button>
-          </Upload>
-        </Form.Item>
+        
         <Form.Item label="附件id" name="resourceId" rules={[{required: true}]}>
           <Input disabled/>
         </Form.Item>
-        <Form.Item label="下载URL" name="resourceDownload" >
+        <Form.Item label="下载URL" name="downloadUrl" >
           <Input disabled/>
         </Form.Item>
-        <Form.Item label="水印URL" name="dowloadHttpUrl" >
+        <Form.Item label="文件后缀" name="resourceSuffix" rules={[{required: true}]}>
           <Input disabled/>
         </Form.Item>
-        <Form.Item label="存储路径" name="resourceStorage" >
-          <Input disabled/>
-        </Form.Item>
-        <Form.Item label="文件后缀" name="suffix" rules={[{required: true}]}>
-          <Input disabled/>
-        </Form.Item>
-        <Form.Item label="文件大小" name="size" rules={[{required: true}]}>
+        <Form.Item label="文件大小" name="resourceSize" rules={[{required: true}]}>
           <Input disabled/>
         </Form.Item>
       </Form>
@@ -131,6 +112,7 @@ const EditResource: React.FC<Props> = ({
 
 const mapStateProps = (state:any)=>{
   return {
+    systemlink: state.other.systemlink,
     utils: state.app.utils
   }
 }
