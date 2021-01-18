@@ -31,7 +31,11 @@ const OnlyParkElement:React.FC<Props> = ({
   },[itemId])
   
   return (
-    <Select>
+    <Select value={value} onChange={(v)=>{
+      if(onChange){
+        onChange(v)
+      }
+    }}>
       {onlypark?onlypark.map((item:any)=>(
         <Option key={item.id} value={item.id}>{item.parkName}</Option>
       )):null}

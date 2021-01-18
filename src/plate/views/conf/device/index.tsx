@@ -49,7 +49,7 @@ class SysDeviceConf extends React.Component<Props> {
   state = {
     addVisible: false,
     editVisible: false,
-    detail: {id: "", companyId: "", itemId: ""},
+    detail: {id: "", companyId: "", itemId: "",deviceSerial:""},
     companyId:"",
     itemId:""
   }
@@ -79,7 +79,12 @@ class SysDeviceConf extends React.Component<Props> {
           <>
             <Button type="link" size="small" onClick={()=>this.setState({editVisible: true, detail: item,
               companyId:item.companyId, itemId:item.itemId})} >编辑</Button>
-            <Button size="small" type="link"  >详情</Button>
+            <Button size="small" type="link" onClick={()=>{
+              this.props.history.push({
+                pathname: `/conf/device/${item.id}/detail/${item.iotId}`,
+                state: params
+              })
+            }} >详情</Button>
             <Popconfirm title="是否删除？" onConfirm={()=>{
               this.props.actions.changeDeviceConf({
                 objective: "delete",
@@ -100,7 +105,7 @@ class SysDeviceConf extends React.Component<Props> {
   render() {
     const {spinning, utils, deviceconf } = this.props
     const {addVisible, editVisible, detail, companyId, itemId} = this.state
-
+    
     return (
       <JCard spinning={spinning}> 
         <div key="a">
@@ -155,7 +160,8 @@ class SysDeviceConf extends React.Component<Props> {
             this.props.actions.changeDeviceConf({
               ...values,
               id: detail.id,
-              objective: "update"
+              objective: "update",
+              deviceSerial: detail.deviceSerial
             }, (res:any)=>{
               this.props.actions.getDeviceConf(params, {obj: res, type: "list"})
               this.setState({editVisible: false})
@@ -167,7 +173,7 @@ class SysDeviceConf extends React.Component<Props> {
               const [companyId, itemId] = v
               this.setState({companyId, itemId})
             }} />},
-            {label: '停车场', name: "companyHe", type: <OnlyParkElement companyId={companyId} itemId={itemId} />},
+            {label: '停车场', name: "parkingId", type: <OnlyParkElement companyId={companyId} itemId={itemId} />},
             {label: "IotId", name: "iotId", type: "input"},
             {label: "进出类型", name: "inOut", type: "select", selectList: [
               {label: "出口", id: 1},

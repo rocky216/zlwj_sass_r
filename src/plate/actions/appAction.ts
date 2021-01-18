@@ -2,6 +2,31 @@ import {APP_LOADING_START, APP_LOADING_END, APP_LOADING_NOT} from "@plate/consta
 import {storetApi, stateApi, OptProps} from "@public/utils/action"
 const ACTION = "APP"
 
+let timer:any;
+
+
+export const setRouteProps = (params:any)=>{
+  return (dispatch:Function, getState:any)=>{
+    clearTimeout(timer)
+    timer = setTimeout(()=>{
+      dispatch({
+        type: APP_LOADING_NOT,
+        level:params
+      })
+    }, 0)
+  }
+}
+
+export const changeCompanyItem = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/system-module/cutCompanyItem",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
 export const getAllDevice = (params:any, opt:OptProps)=>{
   return async (dispatch:Function, getState:any)=>{

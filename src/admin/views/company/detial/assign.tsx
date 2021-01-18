@@ -55,7 +55,7 @@ class AssignAuth extends React.Component<Props> {
 
     function recursion(arr:any[]){
       _.each(arr, (item,index)=>{
-        item.key = item.id
+        item.key = item.singleStr || item.id
         item.title = item.name
         item.children = item.userAuthVoList
         if(item.type==="system"){

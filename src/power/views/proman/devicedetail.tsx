@@ -72,7 +72,7 @@ class DeviceDetail extends React.Component<Props> {
     
     
     return (
-      <JCard spinning={spinning}> 
+      <JCard spinning={spinning}>  
         <Card size="small">
           {baseinfo?
           <Descriptions size="small" column={6} title={`（${companyName}${itemName}${shedName}）${deviceName}`}  

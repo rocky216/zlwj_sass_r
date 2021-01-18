@@ -3,6 +3,7 @@ import {Switch, Route} from "react-router-dom"
 import loadable from 'loadable-components'
 import routeData from "./routeData";
 import ErrorPage from "@public/pages/error";
+import AuthRoute from "./AuthRoute";
 
 
 class Routers extends React.Component {
@@ -10,7 +11,7 @@ class Routers extends React.Component {
     return (
       <Switch>
         {routeData.map((item:any, index:number)=>(
-          item.component?<Route
+          item.component?<AuthRoute
             key={item.id} 
             auth={item.id}
             level={item.level}

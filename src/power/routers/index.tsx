@@ -6,7 +6,6 @@ import _ from "lodash"
 import AuthRoute from "./AuthRoute"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
-import {setRouteProps} from "@power/actions/appAction"
 
 interface RouteConf {
   path: string;
@@ -45,7 +44,7 @@ class Routers extends React.Component<Props> {
 
 const mapDispatchProps = (dispatch:any)=>{
   return {
-    actions: bindActionCreators({setRouteProps }, dispatch)
+    actions: bindActionCreators({ }, dispatch)
   }
 }
 

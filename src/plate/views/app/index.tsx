@@ -7,6 +7,7 @@ import SideBar from "@plate/components/SideBar";
 import {getBaseInfo, companyItemInitial} from "@plate/actions/appAction"
 import { bindActionCreators } from "redux";
 import Loading from "@public/components/Loading"
+import Head from "@plate/components/Head";
 
 const { Header, Content, Sider } = Layout;
 
@@ -40,7 +41,7 @@ class App extends React.Component<Props> {
             <SideBar/>
           </Sider>
           <Layout className="content" style={{ marginLeft: 200}}>
-            <Header></Header>
+            <Header><Head/></Header>
             <Content  className={"content_inner "+ (location.pathname=="/" || location.pathname=="/systemhome"?"contentBlackBg":"")} >
               <Routers/>
             </Content>

@@ -2,8 +2,111 @@ import {OTHER_LOADING_START, OTHER_LOADING_END, OTHER_LOADING_NOT} from "@plate/
 import { gCompanyHe, gRtime } from "@public/utils"
 import {storetApi, stateApi, OptProps} from "@public/utils/action"
 import _ from "lodash"
+import moment from "moment"
 const ACTION = "OTHER"
 
+
+export const getPlateMoneyByTime = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-data/selectPlateMoneyByTime",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe", "rtime"])),
+        ...gCompanyHe( params.companyHe),
+        ...gRtime(params.rtime, "startTime", "endTime"),
+        selectDate: moment(params.selectDate).format(params.type=="year" ? "YYYY" : "YYYY-MM"),
+        type: params.type=="year"?"Y":params.type=="month"?"M":"D"
+      }
+    }
+    storetApi(options, "platebytime", dispatch, ACTION, opt)
+  }
+}
+
+export const getPlateIncome = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-data/selectPlateIncome",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe", "rtime"])),
+        ...gCompanyHe( params.companyHe),
+        ...gRtime(params.rtime, "startTime", "endTime"),
+        selectDate: moment(params.selectDate).format(params.type=="year" ? "YYYY" : "YYYY-MM"),
+        type: params.type=="year"?"Y":params.type=="month"?"M":"D"
+      }
+    }
+    storetApi(options, "changecount", dispatch, ACTION, opt)
+  }
+}
+
+export const getPlatePassRecord = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-data/platePassRecord",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe", "rtime"])),
+        ...gCompanyHe( params.companyHe),
+        ...gRtime(params.rtime, "startTime", "endTime"),
+        selectDate: moment(params.selectDate).format(params.type=="year" ? "YYYY" : "YYYY-MM"),
+        type: params.type=="year"?"Y":params.type=="month"?"M":"D"
+      }
+    }
+    storetApi(options, "platerecord", dispatch, ACTION, opt)
+  }
+}
+
+
+export const getIncomeCount = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-data/incomeCount",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe", "rtime"])),
+        ...gCompanyHe( params.companyHe),
+        ...gRtime(params.rtime, "startTime", "endTime"),
+        selectDate: moment(params.selectDate).format(params.type=="year" ? "YYYY" : "YYYY-MM"),
+        type: params.type=="year"?"Y":params.type=="month"?"M":"D"
+      }
+    }
+    storetApi(options, "incomecount", dispatch, ACTION, opt)
+  }
+}
+
+export const getSelectThirty = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-online/selectThirty",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getDeviceonLineLog = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-online/onlineInfo",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getDeviceInfo = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-device/getById",
+      method: "get",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
 
 export const addOrUpTypeCallback = (params:any, next?:(...arg:any)=>void)=>{
   return async (dispatch:Function, getState:any)=>{
