@@ -30,9 +30,9 @@ export const routes = [
   {
     id: "2",
     name: "系统看板",
-    path: "/",
+    path: "/systemhome",
     exact: true,
-    component: HomePage
+    component: lazy({loader: import("@plate/views/home/system")}),
   },
   {
     id: "3",

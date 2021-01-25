@@ -15,11 +15,11 @@ const StackColumnChart:React.FC<Props> = ({
   groupField,
   isStack=true,
   height=500,
-  columnWidthRatio=0.2,
+  columnWidthRatio=0.35,
   isGroup=false,
   legend,
 })=>{
-
+  
   const config = {
     data:data,
     xField,
@@ -29,9 +29,7 @@ const StackColumnChart:React.FC<Props> = ({
     isStack,
     isGroup,
     height,
-    columnWidthRatio,
     legend,
-
   }
 
   return <Column {...config} columnWidthRatio={0.35} />

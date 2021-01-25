@@ -8,12 +8,14 @@ import {getBaseInfo, companyItemInitial} from "@plate/actions/appAction"
 import { bindActionCreators } from "redux";
 import Loading from "@public/components/Loading"
 import Head from "@plate/components/Head";
+import { withRouter } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 
 interface Props {
   actions:any;
   base:any;
+  location:any;
 }
 
 class App extends React.Component<Props> {
@@ -24,7 +26,7 @@ class App extends React.Component<Props> {
   }
 
   render() {
-    const {base} = this.props
+    const {base, location} = this.props
     
     return (
       base?<div className="myApp">
@@ -65,4 +67,4 @@ const mapStateToProps = (state:any)=>{
   }
 }
 
-export default connect(mapStateToProps, mapDispatchProps)(App)
+export default withRouter( connect(mapStateToProps, mapDispatchProps)(App) ) 
