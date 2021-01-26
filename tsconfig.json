@@ -26,6 +26,7 @@
       "@power/*": ["src/power/*"],
       "@sass/*": ["src/sass/*"],
       "@plate/*": ["src/plate/*"],
+      "@door/*": ["src/door/*"],
     }
   },
   "include": [

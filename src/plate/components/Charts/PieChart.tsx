@@ -9,6 +9,7 @@ interface Props {
   label?:any;
   appendPadding?:number[];
   legend?:any;
+  radius?:number;
 }
 
 const PieChart:React.FC<Props> = ({
@@ -22,6 +23,7 @@ const PieChart:React.FC<Props> = ({
     content: '{percentage}',
   },
   legend,
+  radius,
 })=>{
 
   const config = {
@@ -32,7 +34,8 @@ const PieChart:React.FC<Props> = ({
     appendPadding,
     interactions: [{ type: 'element-active' }],
     label,
-    legend
+    legend,
+    radius,
   }
 
   return (

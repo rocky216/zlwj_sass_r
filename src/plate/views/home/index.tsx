@@ -35,6 +35,7 @@ let params = {
 
 
 class HomePage extends React.Component<Props> {
+  rws:any;
 
   componentDidMount(){
     this.props.actions.getWeekPass(params)
@@ -49,9 +50,13 @@ class HomePage extends React.Component<Props> {
     this.getsoket()
   }
 
+  componentWillUnmount(){
+    this.rws.close();
+  }
+
   getsoket(){
-    const rws = new ReconnectingWebSocket('ws://192.168.1.40:4959');
-    rws.addEventListener('open', () => {
+    this.rws = new ReconnectingWebSocket('ws://192.168.1.40:4959');
+    this.rws.addEventListener('open', () => {
       let params = {
         data: {
           itemId:this.props.base.nowItemId,
@@ -60,12 +65,11 @@ class HomePage extends React.Component<Props> {
         cmd: "cut_item",
         status: "1"
       }
-      rws.send( JSON.stringify(params) );
+      this.rws.send( JSON.stringify(params) );
       
     });
-    rws.addEventListener("message", (values:any)=>{
-      console.log(values)
-      this.props.actions.changeHomeData(values.data)
+    this.rws.addEventListener("message", (values:any)=>{
+      this.props.actions.changeHomeData( JSON.parse(values.data) )
     })
   }
 
@@ -153,7 +157,7 @@ class HomePage extends React.Component<Props> {
                       </tr>
                     </thead>
                     <tbody>
-                      {devicelist?devicelist.map((item:any, index:number)=>(
+                      {devicelist?_.slice(devicelist,0,13).map((item:any, index:number)=>(
                         <tr key={index}>
                           <td><Tag color={OnLineTypeColor[item.online]} >{OnLineType[item.online]}</Tag></td>
                           <td>{item.deviceName}</td>
@@ -189,7 +193,7 @@ class HomePage extends React.Component<Props> {
                           <td>{PassType[item.passType]}</td>
                           <td>{CarPayStatus[item.passState]}</td>
                           <td>{item.money}</td>
-                          <td>{item.updateTime.substring(10)}</td>
+                          <td>{item.updateTime?item.updateTime.substring(10):""}</td>
                         </tr>
                       )):null}
                     </tbody>

@@ -6,6 +6,75 @@ import moment from "moment"
 const ACTION = "OTHER"
 
 
+export const initAllInfo = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-parking-config/initAllInfo",
+      method: "post",
+      data: params
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const setDeviceInit = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-device/deviceInit",
+      method: "post",
+      data: {
+        ...(_.omit(params, ["companyHe"])),
+        ...gCompanyHe( params.companyHe)
+      }
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+
+export const getInitInfo = (params:any, next?:(...arg:any)=>void)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-parking-config/initInfo",
+      method: "post",
+      data: {
+        ...(_.omit(params, ["companyHe"])),
+        ...gCompanyHe( params.companyHe)
+      }
+    }
+    stateApi(options, dispatch, ACTION, next)
+  }
+}
+
+export const getDeviceInit = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-device/getDeviceInit",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe"])),
+        ...gCompanyHe( params.companyHe)
+      }
+    }
+    storetApi(options, "deviceinit", dispatch, ACTION, opt)
+  }
+}
+
+
+export const getConfigRule = (params:any, opt:OptProps)=>{
+  return async (dispatch:Function, getState:any)=>{
+    const options:any = {
+      url: "/zlwj/api/plate/sys/plate-parking-config/selectConfigRule",
+      method: "get",
+      data: {
+        ...(_.omit(params, ["companyHe"])),
+        ...gCompanyHe( params.companyHe)
+      }
+    }
+    storetApi(options, "configrule", dispatch, ACTION, opt)
+  }
+}
+
 export const getPlateMoneyByTime = (params:any, opt:OptProps)=>{
   return async (dispatch:Function, getState:any)=>{
     const options:any = {

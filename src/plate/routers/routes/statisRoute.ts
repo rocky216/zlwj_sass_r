@@ -16,4 +16,9 @@ export default [
     path: "/statis/he",
     component: lazy({loader: import("@plate/views/statis/he")}),
   },
+  {
+    name:"缓存数据管理",
+    path: "/statis/cache",
+    component: lazy({loader: import("@plate/views/statis//cache")}),
+  },
 ]

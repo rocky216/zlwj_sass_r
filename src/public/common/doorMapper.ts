@@ -1,0 +1,1 @@
+export const keyPassStatus = ["", "未通过钥匙", "通过全部钥匙", "通过部分钥匙"]

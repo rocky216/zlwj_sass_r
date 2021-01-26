@@ -10,6 +10,9 @@ module.exports = {
   plate: { 
     '@primary-color': '#13c2c2'
   },
+  door: { 
+    '@primary-color': '#fa541c'
+  },
   sass: { 
     '@primary-color': '#1DA57A'
   },

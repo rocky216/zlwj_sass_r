@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/plate/views/park/detail/base/index.less"],"names":[],"mappings":"AAAA,kBAEI,gBAAA,CACA,qBAAJ","file":"8.d0806da0.chunk.css","sourcesContent":[".parkconf {\n  .greybg {\n    padding-top: 15px;\n    background-color: #eee;\n  }\n}\n@primary-color: #13c2c2;"]}
